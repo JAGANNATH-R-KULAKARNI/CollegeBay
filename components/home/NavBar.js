@@ -133,7 +133,10 @@ const ResponsiveAppBar = (props) => {
             ))} */}
           </Box>
           <div style={{ display: "flex" }}>
-            <div style={{ paddingRight: "20px" }}>
+            <div
+              style={{ paddingRight: "20px" }}
+              onClick={() => router.push("/cart")}
+            >
               {matches ? (
                 <Button
                   variant="contained"

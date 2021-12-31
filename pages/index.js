@@ -5,20 +5,21 @@ import Albums from "../components/home/Albums";
 import db from "../utils/Db";
 import Product from "../models/Product";
 import Cart from "../models/Cart";
-import NavBar from "../components/home/NavBar";
+
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { incCart, decCart, justUpdate } from "../utils/redux/actions/index";
+import axios from "axios";
 
 export default function Home({ products, cartLen }) {
-  let text = "";
+  const dispatch = useDispatch();
 
-  for (let i = 0; i < 10000; i++) {
-    text = text + " jagannath ";
-  }
+  useEffect(() => {
+    dispatch(justUpdate(cartLen));
+  }, []);
   return (
     <div>
-      <NavBar />
-      <br />
-      <br />
       <Albums products={products} />
     </div>
   );

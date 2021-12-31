@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import store from "../utils/redux/Store";
 import { Provider } from "react-redux";
+import NavBar from "../components/home/NavBar";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -43,6 +44,9 @@ export default function MyApp(props) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
+          <NavBar />
+          <br />
+          <br />
           <Component {...pageProps} />
           <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
             <Typography variant="h6" align="center" gutterBottom>

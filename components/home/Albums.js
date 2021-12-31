@@ -22,6 +22,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { incCart, decCart, justUpdate } from "../../utils/redux/actions";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const theme = createTheme();
 
@@ -29,21 +30,36 @@ export default function Album(props) {
   const router = useRouter();
   const myState = useSelector((state) => state.changeCartLen);
   const dispatch = useDispatch();
-
+  const matches = useMediaQuery("(min-width:700px)");
   const addToCartHandler = async (route) => {
     await axios
       .post("/api/cart/seed", {
         route: route,
+        delete: false,
       })
       .then((u) => {
+        console.log(u["data"]);
         console.log(u["data"].len);
         dispatch(justUpdate(u["data"].len));
       })
       .catch((err) => {
         console.log(err.response.data);
       });
-    console.log("mysatetttttttttt");
-    console.log(myState);
+  };
+
+  const deleteCartHandler = async (route) => {
+    await axios
+      .delete("/api/cart/seed", {
+        route: route,
+      })
+      .then((u) => {
+        console.log(u["data"]);
+        console.log(u["data"].len);
+        dispatch(justUpdate(u["data"].len));
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   };
 
   return (
@@ -136,7 +152,7 @@ export default function Album(props) {
                     <Chip
                       label="In Stock"
                       style={{
-                        width: "20%",
+                        width: matches ? "20%" : "25%",
                         height: "19px",
                         backgroundColor: Colors.Blue,
                         color: "white",
