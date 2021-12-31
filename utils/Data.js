@@ -1,0 +1,68 @@
+const products = [
+  {
+    name: "Luxor Super Top Ball Pen Blue",
+    route: "LuxorSuperTopBallPenBlue",
+    category: "Books and Instruments",
+    image: "/assets/products/image1.jpg",
+    price: 70,
+    brand: "Luxor",
+    rating: 4.5,
+    countInStock: 20,
+    description: [
+      "Ball pen",
+      "Ink color: Blue",
+      "warranty: 2 Years",
+      "Best suitable for precision writing",
+    ],
+  },
+  {
+    name: "JK Easy Copier Paper - A4, 500 Sheets, 70 GSM, 1 Ream",
+    route: "JKEasyCopierPaper",
+    category: "Books and Instruments",
+    image: "/assets/products/image2.jpg",
+    price: 255,
+    brand: "JK",
+    rating: 4.5,
+    countInStock: 20,
+    description: [
+      "Colour: White",
+      "Minimum machine jamming",
+      "Ideal for photocopying",
+      "ColorLok technology - Faster drying, bolder blacks, vivid colors",
+    ],
+  },
+  {
+    name: "Apsara Non Dust Jumbo Erasers - Pack of 20",
+    route: "ApsaraNonDustJumboErasers",
+    category: "Books and Instruments",
+    image: "/assets/products/image3.jpg",
+    price: 95,
+    brand: "Apsara",
+    rating: 4.5,
+    countInStock: 20,
+    description: [
+      "Soft and smooth",
+      "Erases Graphite gently without damaging paper",
+      "Picks up dust while erasing",
+      "Ideal for students, artists, engineers and architects",
+    ],
+  },
+  {
+    name: "Classmate Pulse 6 Subject Notebook",
+    route: "ClassmatePulse6SubjectNotebook",
+    category: "Books and Instruments",
+    image: "/assets/products/image4.jpg",
+    price: 100,
+    brand: "Classmate",
+    rating: 4.5,
+    countInStock: 20,
+    description: [
+      "The cover design of the notebook is subject to change, it depends on stock availability",
+      "Six subjects! One notebook! Only the best from Classmate",
+      "Classmate uses eco friendly and elemental chlorine free paper",
+      "This notebook consists of high quality papers",
+    ],
+  },
+];
+
+export { products };
