@@ -16,6 +16,10 @@ import Image from "next/image";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
 import styles from "../../styles/NavBar.module.css";
+import * as Colors from "../../utils/Colors";
+import { useEffect } from "react";
+import axios from "axios";
+import BadgeUI from "./Badge";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -128,34 +132,53 @@ const ResponsiveAppBar = (props) => {
               </Button>
             ))} */}
           </Box>
-          <div style={{ float: "right" }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          <div style={{ display: "flex" }}>
+            <div style={{ paddingRight: "20px" }}>
+              {matches ? (
+                <Button
+                  variant="contained"
+                  endIcon={<BadgeUI />}
+                  style={{
+                    backgroundColor: Colors.Yellow,
+                    height: "40px",
+                    borderRadius: "20px",
+                  }}
+                >
+                  Cart
+                </Button>
+              ) : (
+                <BadgeUI />
+              )}
+            </div>
+            <div style={{ float: "right" }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </div>
           </div>
         </Toolbar>
       </Container>

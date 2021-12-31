@@ -15,17 +15,37 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { products } from "../../utils/Data";
 import * as Colors from "../../utils/Colors";
 import Chip from "@mui/material/Chip";
 import { useRouter } from "next/router";
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { incCart, decCart, justUpdate } from "../../utils/redux/actions";
 
 const theme = createTheme();
 
 export default function Album(props) {
   const router = useRouter();
+  const myState = useSelector((state) => state.changeCartLen);
+  const dispatch = useDispatch();
+
+  const addToCartHandler = async (route) => {
+    await axios
+      .post("/api/cart/seed", {
+        route: route,
+      })
+      .then((u) => {
+        console.log(u["data"].len);
+        dispatch(justUpdate(u["data"].len));
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+    console.log("mysatetttttttttt");
+    console.log(myState);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -130,12 +150,7 @@ export default function Album(props) {
                       size="small"
                       variant="outlined"
                       style={{ backgroundColor: Colors.Purple, color: "white" }}
-                      onClick={() =>
-                        router.push({
-                          pathname: `/product/${card.route}`,
-                          query: card,
-                        })
-                      }
+                      onClick={() => router.push(`/product/${card.route}`)}
                     >
                       View Product
                     </Button>
@@ -143,6 +158,7 @@ export default function Album(props) {
                       size="small"
                       variant="outlined"
                       style={{ backgroundColor: Colors.Yellow, color: "white" }}
+                      onClick={() => addToCartHandler(card.route)}
                     >
                       Add To Cart
                     </Button>
