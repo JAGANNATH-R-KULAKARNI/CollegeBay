@@ -4,6 +4,7 @@ import Head from "next/head";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import theme from "./theme";
+import * as Colors from "../utils/Colors";
 import createEmotionCache from "./createEmotionCache";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
@@ -15,7 +16,16 @@ import Link from "@mui/material/Link";
 import store from "../utils/redux/Store";
 import { Provider } from "react-redux";
 import NavBar from "../components/home/NavBar";
+import NProgress from "nprogress";
+import Router from "next/router";
+import "nprogress/nprogress.css";
+NProgress.configure({ showSpinner: false });
 
+Router.events.on("routeChangeStart", (url) => {
+  NProgress.start();
+});
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -39,6 +49,10 @@ export default function MyApp(props) {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs    /nprogress/0.2.0/nprogress.min.css"
+        />
       </Head>
       <Provider store={store}>
         <ThemeProvider theme={theme}>

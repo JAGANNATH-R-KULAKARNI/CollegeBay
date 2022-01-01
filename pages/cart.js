@@ -15,20 +15,47 @@ import Grid from "@mui/material/Grid";
 import ProductsUI from "../components/cart/Products";
 import ButtonUI from "../components/cart/Button";
 import Paper from "@mui/material/Paper";
+import { useRouter } from "next/router";
 
-export default function Home({ data, cartLen }) {
+export default function Home({ cart, cartLen }) {
   const dispatch = useDispatch();
+  const [totalAmount, setTotalAmount] = React.useState(0);
+
+  async function getTheData() {
+    console.log(sessionStorage.getItem("collegeBay"));
+    await axios
+      .post("/api/auth/verify", {
+        token: sessionStorage.getItem("collegeBay"),
+      })
+      .then((u) => {
+        console.log("result from verify");
+        console.log(u);
+
+        if (!u["data"].currentUser) router.push("/auth/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+        router.push("/auth/signin");
+      });
+  }
 
   useEffect(() => {
+    getTheData();
     dispatch(justUpdate(cartLen));
+    let sum = 0;
+    cart.map((item) => {
+      sum = sum + item.price;
+    });
+    setTotalAmount(sum);
   }, []);
+
   return (
     <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
       <br />
       <br />
       <Grid container spacing={2}>
         <Grid item xs={8} style={{ maxHeight: "600px" }}>
-          <ProductsUI />
+          <ProductsUI data={cart} />
         </Grid>
         <Grid item xs={4} style={{ paddingLeft: "5%" }}>
           <Paper
@@ -37,14 +64,16 @@ export default function Home({ data, cartLen }) {
           >
             <div style={{ padding: "5%", textAlign: "center" }}>
               <p style={{ fontSize: "20px" }}> Total Items </p>
-              <p style={{ fontSize: "40px", marginTop: "-20px" }}>5 </p>
+              <p style={{ fontSize: "40px", marginTop: "-20px" }}>{cartLen} </p>
               <p style={{ fontSize: "20px", marginTop: "-20px" }}>
                 {" "}
                 Total Amount
               </p>
-              <p style={{ fontSize: "40px", marginTop: "-20px" }}>₹ 1000 </p>
+              <p style={{ fontSize: "40px", marginTop: "-20px" }}>
+                ₹ {totalAmount}{" "}
+              </p>
               <div style={{ marginTop: "-20px" }}>
-                <ButtonUI text="Checkout" />
+                <ButtonUI text={cartLen > 0 ? "Checkout" : "ShopNow"} />
               </div>
             </div>
           </Paper>
@@ -59,7 +88,8 @@ export async function getServerSideProps() {
   const products = await Product.find({}).lean();
   const cart = await Cart.find({}).lean();
   await db.disconnect();
-
+  // console.log("cart");
+  // console.log(cart);
   let data = [];
   cart.map((item) => {
     products.map((item2) => {
@@ -67,15 +97,31 @@ export async function getServerSideProps() {
         let status = data.find((item3) => item3.route == item.route);
 
         if (!status) {
-          data = [...data, item];
+          data = [
+            ...data,
+            {
+              name: item2.name,
+              route: item2.route,
+              category: item2.category,
+              image: item2.image,
+              price: item2.price,
+              brand: item2.brand,
+              rating: item2.rating,
+              numReviews: item2.numReviews,
+              countInStock: item2.countInStock,
+              description: item2.description,
+              createdAt: item2.createdAt.toString(),
+            },
+          ];
         }
       }
     });
   });
 
+  console.log(data);
   return {
     props: {
-      cart: data.map(db.convertDocToObj),
+      cart: data,
       cartLen: cart.length,
     },
   };

@@ -1,4 +1,12 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import Router from "next/router";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,25 +16,28 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Red, Blue, Purple, Yellow } from "../../utils/Colors";
 import Image from "next/image";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useRouter } from "next/router";
 import styles from "../../styles/NavBar.module.css";
 import * as Colors from "../../utils/Colors";
-import { useEffect } from "react";
 import axios from "axios";
 import BadgeUI from "./Badge";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
-const ResponsiveAppBar = (props) => {
-  const matches = useMediaQuery("(min-width:700px)");
+function Navbar() {
+  const bg1 = useMediaQuery("(min-width:700px)");
   const router = useRouter();
+
+  // useEffect(() => {
+  //   fetchProfile();
+  // }, []);
+
+  const [click, setclick] = useState(false);
+
+  const handleClick = () => setclick(!click);
+  const closeMenu = () => setclick(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -44,7 +55,6 @@ const ResponsiveAppBar = (props) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   const MENU = (
     <Box
       sx={{
@@ -90,54 +100,145 @@ const ResponsiveAppBar = (props) => {
     </Box>
   );
 
-  const LOGO = (
-    // <Image src="/assets/home/logo.png" height="30px" width="70px" alt="logo" />
-    <div></div>
-  );
   return (
-    <AppBar
-      position="fixed"
-      style={{
-        backgroundColor: "white",
-        marginTop: "-17px",
-        height: "85px",
-      }}
-      elevation={0}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography variant="h6" noWrap component="div">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                pointerEvents: "stroke",
-              }}
-              onClick={() => router.push("/")}
-              className={styles.logo}
-            >
-              {matches ? LOGO : MENU}
-              <h2 style={{ color: Purple, paddingLeft: "10px" }}>College</h2>
-              <h2 style={{ color: Yellow }}>Bay</h2>
-            </div>
-          </Typography>{" "}
-          <Box sx={{ flexGrow: 1 }}>
-            {/* {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+    <>
+      <nav className={styles.navbar}>
+        <div className={styles.navbar_container}>
+          <Link href="/">
+            <Tooltip title="Hi there">
+              <div
+                className={styles.navbar_logo}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  pointerEvents: "stroke",
+                }}
               >
-                {page}
+                {/* {bg1 ? null : MENU} */}
+                <h1
+                  style={{
+                    color: Purple,
+                    paddingLeft: "20px",
+                    fontSize: "30px",
+                  }}
+                >
+                  College
+                </h1>
+                <h1 style={{ color: Yellow, fontSize: "30px" }}>Bay</h1>
+              </div>
+            </Tooltip>
+          </Link>
+
+          {/* <ul
+            className={
+              click
+                ? styles.nav_menu_hidden + " " + styles.active
+                : styles.nav_menu_hidden
+            }
+          >
+            <li className={styles.nav_item} onClick={closeMenu}>
+              <Button
+                className={styles.btn}
+                style={{
+                  backgroundColor: "#33CC99",
+                }}
+              >
+                <Link href="/" className={styles.nav_links}>
+                  Home
+                </Link>
               </Button>
-            ))} */}
-          </Box>
-          <div style={{ display: "flex" }}>
+            </li>
+            <li className={styles.nav_item} onClick={closeMenu}>
+              <Button
+                className={styles.btn}
+                style={{
+                  backgroundColor: "#00CCFF",
+                }}
+              >
+                <Link href="/projects" className={styles.nav_links}>
+                  Projects
+                </Link>
+              </Button>
+            </li>
+
+            {bg1 ? (
+              <li>
+                <Button
+                  className={styles.btn}
+                  style={{
+                    height: "40px",
+                    width: "130px",
+                    backgroundColor: "#FFCC00",
+                    fontSize: "13px",
+                  }}
+                >
+                  <Link
+                    href="/#bookNow"
+                    style={{
+                      paddingTop: "5px",
+                      paddingBottom: "5px",
+                    }}
+                  >
+                    Live Classes
+                  </Link>
+                </Button>
+              </li>
+            ) : null}
+            <li className={styles.nav_item} onClick={closeMenu}>
+              <Button className={styles.btn + " " + styles.btn_glow}>
+                <Link href="/payment">Buy Kit</Link>
+              </Button>
+            </li>
+          </ul>
+
+          <ul>
+            {bg1 ? null : (
+              <li>
+                <Button
+                  className={styles.btn}
+                  style={{
+                    height: "40px",
+                    width: "130px",
+                    backgroundColor: "#FFCC00",
+                    fontSize: "13px",
+                  }}
+                >
+                  <Link
+                    href="/#bookNow"
+                    style={{
+                      paddingTop: "5px",
+                      paddingBottom: "5px",
+                    }}
+                  >
+                    Live Classes
+                  </Link>
+                </Button>
+              </li>
+            )}
+          </ul> */}
+          <ul
+            className={styles.nav_menu}
+            style={{ marginRight: bg1 ? "15px" : "-15px" }}
+          >
+            {/* {profile ? (
+              <ProfileIconUI
+                type="Logout"
+                Afterclick={signOut}
+                user={userDetail.username}
+                Image={Image}
+              />
+            ) : (
+              <li className={styles.nav_item}>
+                <div className={styles.nav_links} onClick={checkUser}>
+                  LOGIN
+                </div>
+              </li>
+            )} */}
             <div
               style={{ paddingRight: "20px" }}
               onClick={() => router.push("/cart")}
             >
-              {matches ? (
+              {bg1 ? (
                 <Button
                   variant="contained"
                   endIcon={<BadgeUI />}
@@ -182,10 +283,14 @@ const ResponsiveAppBar = (props) => {
                 ))}
               </Menu>
             </div>
+          </ul>
+          <div className={styles.menu_icon} onClick={handleClick}>
+            <i className={click ? "fas fa-times" : "fa fa-bars"}></i>
           </div>
-        </Toolbar>
-      </Container>
-    </AppBar>
+        </div>
+      </nav>
+    </>
   );
-};
-export default ResponsiveAppBar;
+}
+
+export default Navbar;

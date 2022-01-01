@@ -7,17 +7,37 @@ import Product from "../models/Product";
 import Cart from "../models/Cart";
 
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { incCart, decCart, justUpdate } from "../utils/redux/actions/index";
+import { justUpdate } from "../utils/redux/actions/index";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function Home({ products, cartLen }) {
   const dispatch = useDispatch();
+  const router = useRouter();
 
+  async function getTheData() {
+    console.log(sessionStorage.getItem("collegeBay"));
+    await axios
+      .post("/api/auth/verify", {
+        token: sessionStorage.getItem("collegeBay"),
+      })
+      .then((u) => {
+        console.log("result from verify");
+        console.log(u);
+
+        if (!u["data"].currentUser) router.push("/auth/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+        router.push("/auth/signin");
+      });
+  }
   useEffect(() => {
+    getTheData();
     dispatch(justUpdate(cartLen));
   }, []);
+
   return (
     <div>
       <Albums products={products} />
@@ -27,6 +47,7 @@ export default function Home({ products, cartLen }) {
 
 export async function getServerSideProps() {
   await db.connect();
+
   const products = await Product.find({}).lean();
   const cart = await Cart.find({}).lean();
   //The lean option tells Mongoose to skip hydrating the result documents. This makes queries faster and less memory intensive, but the result documents are plain old JavaScript objects (POJOs), not Mongoose documents.
