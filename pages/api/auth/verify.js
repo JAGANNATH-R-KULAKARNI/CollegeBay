@@ -12,6 +12,7 @@ handler.post(async (req, res) => {
   }
   try {
     const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
+
     return res.send({
       message: payload ? "Authorized" : "Not Authorized",
       currentUser: payload,

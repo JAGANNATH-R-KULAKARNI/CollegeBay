@@ -1,10 +1,13 @@
 import React from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 function SignUp() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  const router = useRouter();
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
@@ -19,6 +22,7 @@ function SignUp() {
       })
       .then((u) => {
         console.log(u["data"]);
+        router.push("/auth/signin");
       })
       .catch((err) => {
         console.log(err);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import CardUI from "./Card";
 
-function Product({ data }) {
+function Product({ data, deleteCartItem }) {
   // useEffect(() => {
   //   console.log("datatat");
   //   console.log(props.data);
@@ -25,12 +25,14 @@ function Product({ data }) {
         ) : (
           data &&
           data.map((item) => {
-            return (
-              <div key={item.route}>
-                <CardUI data={item} />
-                <br />
-              </div>
-            );
+            if (item && item.route) {
+              return (
+                <div key={item.route}>
+                  <CardUI data={item} deleteCartItem={deleteCartItem} />
+                  <br />
+                </div>
+              );
+            }
           })
         )}
       </div>

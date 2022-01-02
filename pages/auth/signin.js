@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function SignIn() {
   const [email, setEmail] = React.useState("");
@@ -45,6 +46,10 @@ function SignIn() {
           />
           <br />
           <button onClick={onSubmitForm}>Submit</button>
+          <br />
+          <p>
+            New User ? <Link href="/auth/signup">SignUp</Link>
+          </p>
         </form>
       </div>
     </div>

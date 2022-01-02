@@ -9,8 +9,11 @@ import Typography from "@mui/material/Typography";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import * as Colors from "../../utils/Colors";
 
-export default function MediaControlCard({ data }) {
+export default function MediaControlCard({ data, deleteCartItem }) {
   const theme = useTheme();
 
   return (
@@ -43,6 +46,14 @@ export default function MediaControlCard({ data }) {
           </Typography>
 
           <h2>₹ {data && data.price}</h2>
+          <Button
+            size="small"
+            variant="outlined"
+            style={{ backgroundColor: Colors.Yellow, color: "white" }}
+            onClick={() => deleteCartItem(data.route)}
+          >
+            Remove From Cart
+          </Button>
         </CardContent>
       </Box>
       <CardMedia

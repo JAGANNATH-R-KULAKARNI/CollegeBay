@@ -3,8 +3,6 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Albums from "../components/home/Albums";
 import db from "../utils/Db";
-import Product from "../models/Product";
-import Cart from "../models/Cart";
 
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -17,9 +15,12 @@ import ButtonUI from "../components/cart/Button";
 import Paper from "@mui/material/Paper";
 import { useRouter } from "next/router";
 
-export default function Home({ cart, cartLen }) {
+export default function Home() {
   const dispatch = useDispatch();
   const [totalAmount, setTotalAmount] = React.useState(0);
+  const [cart, setCart] = React.useState(null);
+  const cartLen = useSelector((state) => state.changeCartLen);
+  const router = useRouter();
 
   async function getTheData() {
     console.log(sessionStorage.getItem("collegeBay"));
@@ -39,14 +40,46 @@ export default function Home({ cart, cartLen }) {
       });
   }
 
+  async function getCart() {
+    console.log(sessionStorage.getItem("collegeBay"));
+    await axios
+      .post("/api/cart", {
+        token: sessionStorage.getItem("collegeBay"),
+      })
+      .then((u) => {
+        console.log("result from cart api");
+        console.log(u["data"]);
+        dispatch(justUpdate(u["data"].cart.length));
+        setCart(u["data"].cart);
+        let sum = 0;
+        u["data"].cart.map((item) => {
+          sum = sum + item.price;
+        });
+        setTotalAmount(sum);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  async function deleteCartItem(route) {
+    await axios
+      .post("/api/cart/seed", {
+        route: route,
+        token: sessionStorage.getItem("collegeBay"),
+        delete: true,
+      })
+      .then((u) => {
+        getCart();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }
+
   useEffect(() => {
     getTheData();
-    dispatch(justUpdate(cartLen));
-    let sum = 0;
-    cart.map((item) => {
-      sum = sum + item.price;
-    });
-    setTotalAmount(sum);
+    getCart();
   }, []);
 
   return (
@@ -55,7 +88,7 @@ export default function Home({ cart, cartLen }) {
       <br />
       <Grid container spacing={2}>
         <Grid item xs={8} style={{ maxHeight: "600px" }}>
-          <ProductsUI data={cart} />
+          <ProductsUI data={cart} deleteCartItem={deleteCartItem} />
         </Grid>
         <Grid item xs={4} style={{ paddingLeft: "5%" }}>
           <Paper
@@ -84,45 +117,10 @@ export default function Home({ cart, cartLen }) {
 }
 
 export async function getServerSideProps() {
-  await db.connect();
-  const products = await Product.find({}).lean();
-  const cart = await Cart.find({}).lean();
-  await db.disconnect();
-  // console.log("cart");
-  // console.log(cart);
-  let data = [];
-  cart.map((item) => {
-    products.map((item2) => {
-      if (item2.route == item.route) {
-        let status = data.find((item3) => item3.route == item.route);
-
-        if (!status) {
-          data = [
-            ...data,
-            {
-              name: item2.name,
-              route: item2.route,
-              category: item2.category,
-              image: item2.image,
-              price: item2.price,
-              brand: item2.brand,
-              rating: item2.rating,
-              numReviews: item2.numReviews,
-              countInStock: item2.countInStock,
-              description: item2.description,
-              createdAt: item2.createdAt.toString(),
-            },
-          ];
-        }
-      }
-    });
-  });
-
-  console.log(data);
   return {
     props: {
-      cart: data,
-      cartLen: cart.length,
+      cart: [],
+      cartLen: 0,
     },
   };
 }

@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    cart: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,
@@ -22,4 +26,5 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
+
 export default User;

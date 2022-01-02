@@ -35,6 +35,7 @@ export default function Album(props) {
     await axios
       .post("/api/cart/seed", {
         route: route,
+        token: sessionStorage.getItem("collegeBay"),
         delete: false,
       })
       .then((u) => {

@@ -12,7 +12,7 @@ import { justUpdate } from "../utils/redux/actions/index";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-export default function Home({ products, cartLen }) {
+export default function Home({ products }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -33,9 +33,26 @@ export default function Home({ products, cartLen }) {
         router.push("/auth/signin");
       });
   }
+
+  async function getCart() {
+    console.log(sessionStorage.getItem("collegeBay"));
+    await axios
+      .post("/api/cart", {
+        token: sessionStorage.getItem("collegeBay"),
+      })
+      .then((u) => {
+        console.log("result from cart api");
+        console.log(u["data"]);
+        dispatch(justUpdate(u["data"].cart.length));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   useEffect(() => {
     getTheData();
-    dispatch(justUpdate(cartLen));
+    getCart();
   }, []);
 
   return (
@@ -50,6 +67,7 @@ export async function getServerSideProps() {
 
   const products = await Product.find({}).lean();
   const cart = await Cart.find({}).lean();
+
   //The lean option tells Mongoose to skip hydrating the result documents. This makes queries faster and less memory intensive, but the result documents are plain old JavaScript objects (POJOs), not Mongoose documents.
   await db.disconnect();
   // console.log(products);
