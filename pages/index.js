@@ -41,8 +41,9 @@ export default function Home({ products }) {
         token: sessionStorage.getItem("collegeBay"),
       })
       .then((u) => {
-        console.log("result from cart api");
+        console.log("result from cart api(index.js)");
         console.log(u["data"]);
+        console.log(typeof u["data"].cart);
         dispatch(justUpdate(u["data"].cart.length));
       })
       .catch((err) => {

@@ -68,7 +68,7 @@ handler.post(async (req, res) => {
 
   await db.disconnect();
 
-  return res.send({ message: "Successful", len: cart.length });
+  return res.send({ message: "Successful", len: cart.length, cart: cart });
 });
 
 export default handler;

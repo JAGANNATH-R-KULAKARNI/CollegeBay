@@ -18,3 +18,10 @@ export const justUpdate = (value) => {
     payload: value,
   };
 };
+
+export const updateCart = (cart) => {
+  return {
+    type: "UPDATE_THE_CART",
+    payload: value,
+  };
+};
