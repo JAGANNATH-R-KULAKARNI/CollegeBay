@@ -12,6 +12,7 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as Colors from "../../utils/Colors";
+import Link from "next/link";
 
 export default function MediaControlCard({ data, deleteCartItem }) {
   const theme = useTheme();
@@ -35,7 +36,9 @@ export default function MediaControlCard({ data, deleteCartItem }) {
       >
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
-            {data && data.name}
+            <Link href={`/product/${data.route}`}>
+              <a style={{ color: Colors.Purple }}> {data && data.name}</a>
+            </Link>
           </Typography>
           <Typography
             variant="subtitle1"

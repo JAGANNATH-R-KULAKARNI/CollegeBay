@@ -1,21 +1,23 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import Albums from "../components/home/Albums";
-import db from "../utils/Db";
+import styles from "../../styles/Home.module.css";
+import Albums from "../../components/home/Albums";
+import db from "../../utils/Db";
 
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { incCart, decCart, justUpdate } from "../utils/redux/actions/index";
+import { incCart, decCart, justUpdate } from "../../utils/redux/actions/index";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
-import ProductsUI from "../components/cart/Products";
-import ButtonUI from "../components/cart/Button";
+import ProductsUI from "../../components/cart/Products";
+import ButtonUI from "../../components/cart/Button";
 import Paper from "@mui/material/Paper";
 import { useRouter } from "next/router";
 
-export default function Cart() {
+import CheckoutUI from "../../components/payment/Checkout";
+
+export default function Payment() {
   const dispatch = useDispatch();
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [cart, setCart] = React.useState(null);
@@ -83,38 +85,8 @@ export default function Cart() {
   }, []);
 
   return (
-    <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
-      <br />
-      <br />
-      <Grid container spacing={2}>
-        <Grid item xs={8} style={{ maxHeight: "600px" }}>
-          <ProductsUI data={cart} deleteCartItem={deleteCartItem} />
-        </Grid>
-        <Grid item xs={4} style={{ paddingLeft: "5%" }}>
-          <Paper
-            style={{ width: "100%", height: "350px", marginTop: "100px" }}
-            elevation={3}
-          >
-            <div style={{ padding: "5%", textAlign: "center" }}>
-              <p style={{ fontSize: "20px" }}> Total Items </p>
-              <p style={{ fontSize: "40px", marginTop: "-20px" }}>{cartLen} </p>
-              <p style={{ fontSize: "20px", marginTop: "-20px" }}>
-                {" "}
-                Total Amount
-              </p>
-              <p style={{ fontSize: "40px", marginTop: "-20px" }}>
-                ₹ {totalAmount}{" "}
-              </p>
-              <div
-                style={{ marginTop: "-20px" }}
-                onClick={() => router.push("/payment")}
-              >
-                <ButtonUI text={cartLen > 0 ? "Checkout" : "ShopNow"} />
-              </div>
-            </div>
-          </Paper>
-        </Grid>
-      </Grid>
+    <div>
+      <CheckoutUI />
     </div>
   );
 }
