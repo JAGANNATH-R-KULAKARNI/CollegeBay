@@ -13,13 +13,19 @@ handler.post(async (req, res) => {
   let user = await User.find({ email: payload.email });
 
   if (req.body.delete == true) {
-    if (user[0].cart.find((item) => item == req.body.route)) {
+    if (
+      user[0].cart.find((item) => item == req.body.route) ||
+      req.body.deleteAtOnce
+    ) {
       var updatedCart = [];
 
-      for (var j = 0; j < user[0].cart.length; j++) {
-        if (user[0].cart[j] != req.body.route)
-          updatedCart.push(user[0].cart[j]);
+      if (!req.body.deleteAtOnce) {
+        for (var j = 0; j < user[0].cart.length; j++) {
+          if (user[0].cart[j] != req.body.route)
+            updatedCart.push(user[0].cart[j]);
+        }
       }
+
       var user_id = payload.id;
 
       User.findByIdAndUpdate(

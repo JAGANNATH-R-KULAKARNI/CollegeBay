@@ -34,7 +34,7 @@ const steps = ["Shipping address", "Payment details", "Review your order"];
 
 const theme = createTheme();
 
-export default function Checkout() {
+export default function Checkout(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -78,7 +78,7 @@ export default function Checkout() {
           />
         );
       case 2:
-        return <Review />;
+        return <Review totalAmount={props.totalAmount} />;
       default:
         throw new Error("Unknown step");
     }
@@ -113,7 +113,10 @@ export default function Checkout() {
 
   const PAYMENT_BUTTON =
     paymentType == 0 ? (
-      <PayPalUI />
+      <PayPalUI
+        totalAmount={props.amountUSD}
+        deleteCartItem={props.deleteCartItem}
+      />
     ) : paymentType == 1 ? (
       <h2>Stripe</h2>
     ) : (
