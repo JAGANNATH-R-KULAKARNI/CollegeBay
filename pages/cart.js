@@ -107,7 +107,7 @@ export default function Cart() {
               </p>
               <div
                 style={{ marginTop: "-20px" }}
-                onClick={() => router.push("/payment")}
+                onClick={() => router.push(cartLen > 0 ? "/payment" : "/")}
               >
                 <ButtonUI text={cartLen > 0 ? "Checkout" : "ShopNow"} />
               </div>

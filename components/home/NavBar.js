@@ -290,6 +290,9 @@ function Navbar() {
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
+                <MenuItem onClick={() => router.push("/myorders")}>
+                  <Typography textAlign="center">My Orders</Typography>
+                </MenuItem>
                 <MenuItem onClick={logOut}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>

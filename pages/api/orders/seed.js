@@ -6,20 +6,10 @@ import jwt from "jsonwebtoken";
 const handler = nc();
 
 handler.post(async (req, res) => {
-  console.log(
-    "here in orders seed post handler--------------------------------------------------------"
-  );
   await db.connect();
   const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
   let user = await User.find({ email: payload.email });
-  console.log(
-    "here in orders seed post handler------------------------------------------"
-  );
-  console.log(user);
-  console.log("orders---");
-  console.log(user[0].orders);
-  console.log("cart in user---");
-  console.log(user[0].cart);
+
   let orders = user[0].orders;
   const cart = req.body.cart;
   const details = req.body.details;

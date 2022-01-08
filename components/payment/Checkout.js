@@ -107,11 +107,16 @@ export default function Checkout(props) {
     };
   };
 
+  const orderPlaced = () => {
+    setActiveStep(activeStep + 1);
+    props.deleteCartItem();
+  };
+
   const PAYMENT_BUTTON =
     paymentType == 0 ? (
       <PayPalUI
         totalAmount={props.amountUSD}
-        deleteCartItem={props.deleteCartItem}
+        deleteCartItem={orderPlaced}
         myOrdersUpdate={props.myOrdersUpdate}
         userDetails={getUserDetails()}
       />

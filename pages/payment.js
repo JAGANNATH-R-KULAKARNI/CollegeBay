@@ -74,6 +74,9 @@ export default function Payment() {
         u["data"].cart.map((item) => {
           sum = sum + item.price;
         });
+
+        if (sum == 0) router.push("/");
+
         setTotalAmount(sum);
         convertCurrency(sum);
       })
