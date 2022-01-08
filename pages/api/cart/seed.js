@@ -3,7 +3,6 @@ import Cart from "../../../models/Cart";
 import db from "../../../utils/Db";
 import User from "../../../models/User";
 import jwt from "jsonwebtoken";
-import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 const handler = nc();
 

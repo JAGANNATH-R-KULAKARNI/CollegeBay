@@ -52,6 +52,8 @@ export default function Album(props) {
       });
   };
   async function sortItOut2(cart) {
+    if (!cart) return;
+
     const hash = {};
 
     cart.map((item) => {

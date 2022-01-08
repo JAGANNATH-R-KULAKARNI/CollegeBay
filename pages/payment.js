@@ -1,21 +1,21 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../../styles/Home.module.css";
-import Albums from "../../components/home/Albums";
-import db from "../../utils/Db";
+import styles from "../styles/Home.module.css";
+import Albums from "../components/home/Albums";
+import db from "../utils/Db";
 
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { incCart, decCart, justUpdate } from "../../utils/redux/actions/index";
+import { incCart, decCart, justUpdate } from "../utils/redux/actions/index";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
-import ProductsUI from "../../components/cart/Products";
-import ButtonUI from "../../components/cart/Button";
+import ProductsUI from "../components/cart/Products";
+import ButtonUI from "../components/cart/Button";
 import Paper from "@mui/material/Paper";
 import { useRouter } from "next/router";
 
-import CheckoutUI from "../../components/payment/Checkout";
+import CheckoutUI from "../components/payment/Checkout";
 
 export default function Payment() {
   const dispatch = useDispatch();
@@ -82,6 +82,30 @@ export default function Payment() {
       });
   }
 
+  async function myOrdersUpdate(details, data, userDetails) {
+    console.log("here in myOrdersUpdate");
+    console.log(details);
+    console.log(data);
+    console.log(userDetails);
+    console.log(cart);
+    // return;
+    await axios
+      .post("/api/orders/seed", {
+        token: sessionStorage.getItem("collegeBay"),
+        cart: cart,
+        details: details,
+        data: data,
+        amount: totalAmount,
+        userDetails: userDetails,
+      })
+      .then((u) => {
+        console.log(u);
+      })
+      .catch((err) => {
+        console.log(err.response.message);
+      });
+  }
+
   async function deleteCartItem() {
     await axios
       .post("/api/cart/seed", {
@@ -108,6 +132,7 @@ export default function Payment() {
         totalAmount={totalAmount}
         amountUSD={amountUSD}
         deleteCartItem={deleteCartItem}
+        myOrdersUpdate={myOrdersUpdate}
       />
     </div>
   );

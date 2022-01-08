@@ -17,29 +17,15 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import PayPalUI from "./methods/PayPal";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
 const theme = createTheme();
 
 export default function Checkout(props) {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+  const [name, setName] = React.useState("");
   const [address1, setAddress1] = React.useState("");
-  const [address2, setAddress2] = React.useState("");
+  const [phnum, setPhnum] = React.useState("");
   const [city, setCity] = React.useState("");
   const [state, setState] = React.useState("");
   const [pinCode, setPinCode] = React.useState("");
@@ -52,18 +38,16 @@ export default function Checkout(props) {
       case 0:
         return (
           <AddressForm
-            firstName={firstName}
-            lastName={lastName}
+            name={name}
             address1={address1}
-            address2={address2}
+            phnum={phnum}
             city={city}
             state={state}
             pinCode={pinCode}
             country={country}
-            setFirstName={setFirstName}
-            setLastName={setLastName}
+            setName={setName}
             setAddress1={setAddress1}
-            setAddress2={setAddress2}
+            setPhnum={setPhnum}
             setCity={setCity}
             setState={setState}
             setPinCode={setPinCode}
@@ -86,9 +70,9 @@ export default function Checkout(props) {
 
   const checkIt = () => {
     if (
-      firstName.length == 0 ||
-      lastName.length == 0 ||
+      name.length == 0 ||
       address1.length == 0 ||
+      phnum.length == 0 ||
       city.length == 0 ||
       state.length == 0 ||
       pinCode.length == 0 ||
@@ -111,11 +95,25 @@ export default function Checkout(props) {
     setActiveStep(activeStep - 1);
   };
 
+  const getUserDetails = () => {
+    return {
+      name: name,
+      address1: address1,
+      city: city,
+      state: state,
+      pinCode: pinCode,
+      country: country,
+      phnum: phnum,
+    };
+  };
+
   const PAYMENT_BUTTON =
     paymentType == 0 ? (
       <PayPalUI
         totalAmount={props.amountUSD}
         deleteCartItem={props.deleteCartItem}
+        myOrdersUpdate={props.myOrdersUpdate}
+        userDetails={getUserDetails()}
       />
     ) : paymentType == 1 ? (
       <h2>Stripe</h2>

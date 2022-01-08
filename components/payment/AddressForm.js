@@ -21,55 +21,42 @@ export default function AddressForm(props) {
         Shipping address
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
+            id="name"
+            name="name"
+            label="Name"
             fullWidth
-            value={props.firstName}
+            value={props.name}
             autoComplete="given-name"
             variant="standard"
-            onChange={(e) => props.setFirstName(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            value={props.lastName}
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-            onChange={(e) => props.setLastName(e.target.value)}
+            onChange={(e) => props.setName(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             required
-            value={props.address1}
+            value={props.phnum}
+            id="number"
+            name="phnum"
+            label="Phone Number"
+            fullWidth
+            autoComplete="Phone Number"
+            variant="standard"
+            onChange={(e) => props.setPhnum(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
             id="address1"
             name="address1"
-            label="Address line 1"
+            value={props.address2}
+            label="Address line"
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
             onChange={(e) => props.setAddress1(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            value={props.address2}
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-            onChange={(e) => props.setAddress2(e.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
