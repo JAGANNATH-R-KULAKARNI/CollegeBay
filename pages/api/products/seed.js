@@ -1,7 +1,7 @@
 import nc from "next-connect"; //The method routing and middleware layer for Next.js API Routes.
-import Product from "../../models/Product";
-import db from "../../utils/Db";
-import { products } from "../../utils/Data";
+import Product from "../../../models/Product";
+import db from "../../../utils/Db";
+import { products } from "../../../utils/Data";
 
 const handler = nc();
 

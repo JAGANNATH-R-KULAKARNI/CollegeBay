@@ -23,6 +23,7 @@ export default function Payment() {
   const [amountUSD, setAmountUSD] = React.useState(0);
   const [cart, setCart] = React.useState(null);
   const cartLen = useSelector((state) => state.changeCartLen);
+
   const router = useRouter();
 
   async function getTheData() {
@@ -43,23 +44,23 @@ export default function Payment() {
       });
   }
 
-  async function convertCurrency(sum) {
-    await axios
-      .post(
-        `https://api.fastforex.io/convert?from=INR&to=USD&amount=${sum}&api_key=33a9513157-b1ce64609f-r58pfy`
-      )
-      .then((u) => {
-        console.log(u["data"]["result"].USD);
-        setAmountUSD(u["data"]["result"].USD);
-        console.log("convertttt");
-      })
-      .catch((err) => {
-        console.log(err.response.message);
-      });
-    //https://console.fastforex.io/
-  }
+  // async function convertCurrency(sum) {
+  //   await axios
+  //     .post(
+  //       `https://api.fastforex.io/convert?from=INR&to=USD&amount=${sum}&api_key=33a9513157-b1ce64609f-r58pfy`
+  //     )
+  //     .then((u) => {
+  //       console.log(u["data"]["result"].USD);
+  //       setAmountUSD(u["data"]["result"].USD);
+  //       console.log("convertttt");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response.message);
+  //     });
+  //   //https://console.fastforex.io/
+  // }
 
-  async function getCart() {
+  async function getCart(redirectToHome) {
     console.log(sessionStorage.getItem("collegeBay"));
     await axios
       .post("/api/cart", {
@@ -75,39 +76,38 @@ export default function Payment() {
           sum = sum + item.price;
         });
 
-        if (sum == 0) router.push("/");
+        if (sum == 0 && redirectToHome) router.push("/");
 
         setTotalAmount(sum);
-        convertCurrency(sum);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  async function myOrdersUpdate(details, data, userDetails) {
-    console.log("here in myOrdersUpdate");
-    console.log(details);
-    console.log(data);
-    console.log(userDetails);
-    console.log(cart);
-    // return;
-    await axios
-      .post("/api/orders/seed", {
-        token: sessionStorage.getItem("collegeBay"),
-        cart: cart,
-        details: details,
-        data: data,
-        amount: totalAmount,
-        userDetails: userDetails,
-      })
-      .then((u) => {
-        console.log(u);
-      })
-      .catch((err) => {
-        console.log(err.response.message);
-      });
-  }
+  // async function myOrdersUpdate(details, data, userDetails) {
+  //   console.log("here in myOrdersUpdate");
+  //   console.log(details);
+  //   console.log(data);
+  //   console.log(userDetails);
+  //   console.log(cart);
+  //   // return;
+  //   await axios
+  //     .post("/api/orders/seed", {
+  //       token: sessionStorage.getItem("collegeBay"),
+  //       cart: cart,
+  //       details: details,
+  //       data: data,
+  //       amount: totalAmount,
+  //       userDetails: userDetails,
+  //     })
+  //     .then((u) => {
+  //       console.log(u);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response.message);
+  //     });
+  // }
 
   async function razorPayPaymentSuccessful(invoice) {
     console.log("razorPayPaymentSuccessful");
@@ -140,7 +140,7 @@ export default function Payment() {
         deleteAtOnce: true,
       })
       .then((u) => {
-        getCart();
+        getCart(false);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -149,16 +149,13 @@ export default function Payment() {
 
   useEffect(() => {
     getTheData();
-    getCart();
+    getCart(true);
   }, []);
 
   return (
     <div>
       <CheckoutUI
         totalAmount={totalAmount}
-        amountUSD={amountUSD}
-        deleteCartItem={deleteCartItem}
-        myOrdersUpdate={myOrdersUpdate}
         razorPayPaymentSuccessful={razorPayPaymentSuccessful}
       />
     </div>

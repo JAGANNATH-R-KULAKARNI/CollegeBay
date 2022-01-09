@@ -6,6 +6,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import * as Colors from "../../utils/Colors";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -20,8 +21,12 @@ export default function CustomizedBadges(props) {
   const cartLen = useSelector((state) => state.changeCartLen);
   return (
     <IconButton aria-label="cart">
-      <StyledBadge badgeContent={cartLen} color="secondary">
-        <ShoppingCartIcon />
+      <StyledBadge
+        badgeContent={cartLen}
+        // color="primary"
+        style={{ color: "white" }}
+      >
+        <ShoppingCartIcon style={{ color: "white" }} />
       </StyledBadge>
     </IconButton>
   );

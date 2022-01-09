@@ -129,12 +129,12 @@ function Navbar() {
                 >
                   College
                 </h1>
-                <h1 style={{ color: Yellow, fontSize: "30px" }}>Bay</h1>
+                <h1 style={{ color: Yellow, fontSize: "30px" }}>bay</h1>
               </div>
             </Tooltip>
           </Link>
 
-          {/* <ul
+          <ul
             className={
               click
                 ? styles.nav_menu_hidden + " " + styles.active
@@ -145,57 +145,53 @@ function Navbar() {
               <Button
                 className={styles.btn}
                 style={{
-                  backgroundColor: "#33CC99",
+                  backgroundColor: Colors.Yellow,
                 }}
               >
-                <Link href="/" className={styles.nav_links}>
-                  Home
-                </Link>
+                <a href="/" style={{ textDecoration: "none", color: "white" }}>
+                  Shop
+                </a>
               </Button>
             </li>
             <li className={styles.nav_item} onClick={closeMenu}>
               <Button
                 className={styles.btn}
                 style={{
-                  backgroundColor: "#00CCFF",
+                  backgroundColor: Colors.Yellow,
                 }}
               >
-                <Link href="/projects" className={styles.nav_links}>
-                  Projects
-                </Link>
+                <a href="/" style={{ textDecoration: "none", color: "white" }}>
+                  Cakes
+                </a>
               </Button>
             </li>
-
-            {bg1 ? (
-              <li>
-                <Button
-                  className={styles.btn}
-                  style={{
-                    height: "40px",
-                    width: "130px",
-                    backgroundColor: "#FFCC00",
-                    fontSize: "13px",
-                  }}
-                >
-                  <Link
-                    href="/#bookNow"
-                    style={{
-                      paddingTop: "5px",
-                      paddingBottom: "5px",
-                    }}
-                  >
-                    Live Classes
-                  </Link>
-                </Button>
-              </li>
-            ) : null}
             <li className={styles.nav_item} onClick={closeMenu}>
-              <Button className={styles.btn + " " + styles.btn_glow}>
-                <Link href="/payment">Buy Kit</Link>
+              <Button
+                className={styles.btn}
+                style={{
+                  backgroundColor: Colors.Yellow,
+                }}
+              >
+                <a href="/" style={{ textDecoration: "none", color: "white" }}>
+                  Rooms
+                </a>
+              </Button>
+            </li>
+            <li className={styles.nav_item} onClick={closeMenu}>
+              <Button
+                className={styles.btn + " " + styles.btn_glow}
+                style={{ backgroundColor: Colors.Purple, color: "white" }}
+              >
+                <a
+                  href="/sell"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Sell
+                </a>
               </Button>
             </li>
           </ul>
-
+          {/*
           <ul>
             {bg1 ? null : (
               <li>

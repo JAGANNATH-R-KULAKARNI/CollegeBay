@@ -71,16 +71,16 @@
 }
 @keyframes glowing {
   0% {
-    box-shadow: 0 0 -10px #ff3399c0;
+    box-shadow: 0 0 -10px #583e81;
   }
   40% {
-    box-shadow: 0 0 20px #ff3399c0;
+    box-shadow: 0 0 20px #583e81;
   }
   60% {
-    box-shadow: 0 0 20px #ff3399c0;
+    box-shadow: 0 0 20px #583e81;
   }
   100% {
-    box-shadow: 0 0 -10px #ff3399c0;
+    box-shadow: 0 0 -10px #583e81;
   }
 }
 

@@ -108,17 +108,16 @@ export default function Checkout(props) {
     };
   };
 
-  const orderPlaced = () => {
+  const orderSuccessful = (invoice) => {
     setActiveStep(activeStep + 1);
-    props.deleteCartItem();
+    props.razorPayPaymentSuccessful(invoice);
   };
-
   const PAYMENT_BUTTON =
     paymentType == 0 ? (
       <RazorPayUI
         userDetails={getUserDetails()}
         amount={props.totalAmount}
-        razorPayPaymentSuccessful={props.razorPayPaymentSuccessful}
+        razorPayPaymentSuccessful={orderSuccessful}
       />
     ) : (
       <h2>Cash On Delivery</h2>

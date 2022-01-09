@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
-
+import * as Colors from "../../../utils/Colors";
 function RazorPay(props) {
   const theme = createTheme();
   const matches = useMediaQuery("(min-width:650px)");
@@ -16,7 +16,6 @@ function RazorPay(props) {
     userEmail,
     amount
   ) => {
-    alert("payment successful do whatever you like with this data");
     console.log("payment successful----------------------------");
     console.log(response);
     console.log(details);
@@ -95,8 +94,8 @@ function RazorPay(props) {
       key: key_id,
       amount: amt.toString(),
       currency: currency,
-      name: "College Bay",
-      description: "CollegBay - Upcoming Trillion Dollor Company",
+      name: "Collegebay",
+      description: "Collegbay - Upcoming Trillion Dollor Company",
       order_id: order_id,
       handler: async function (response) {
         const data = {
@@ -127,10 +126,10 @@ function RazorPay(props) {
         email: userEmail,
       },
       notes: {
-        address: "CollegeBay Private Limited",
+        address: "Collegebay Private Limited",
       },
       theme: {
-        color: "#FFCC00",
+        color: Colors.Yellow,
       },
     };
 

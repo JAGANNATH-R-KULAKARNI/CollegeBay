@@ -1,7 +1,12 @@
-const Purple = "#583E81";
+// const Purple = "#583E81";
+// const Red = "#D91D57";
+// const Blue = "#0E70F8";
+// const Yellow = "#FBBE01";
+// const Green = "#5DD6AE";
+// const Purple = "#3D5AFF";
+const Purple = "#00A4DB";
 const Red = "#D91D57";
 const Blue = "#0E70F8";
-const Yellow = "#FBBE01";
-const Green = "#5DD6AE";
-
+const Yellow = "#31343C";
+const Green = "#FF4B4B";
 export { Purple, Red, Blue, Yellow, Green };
