@@ -13,9 +13,12 @@ export default function RadioButtonsGroup(props) {
         name="radio-buttons-group"
         onChange={(e) => props.data.setPaymentType(e.target.value)}
       >
-        <FormControlLabel value={0} control={<Radio />} label="Pay Pal" />
-        <FormControlLabel value={1} control={<Radio />} label="Stripe" />
-        <FormControlLabel value={2} control={<Radio />} label="Cash" />
+        <FormControlLabel value={0} control={<Radio />} label="RazorPay" />
+        <FormControlLabel
+          value={1}
+          control={<Radio />}
+          label="Cash On Delivery"
+        />
       </RadioGroup>
     </FormControl>
   );

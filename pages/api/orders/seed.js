@@ -11,20 +11,10 @@ handler.post(async (req, res) => {
   let user = await User.find({ email: payload.email });
 
   let orders = user[0].orders;
-  const cart = req.body.cart;
-  const details = req.body.details;
-  const data = req.body.data;
-  const userDetails = req.body.userDetails;
+  const invoice = req.body.invoice;
 
-  orders.push({
-    orderId: details.id,
-    cart: cart,
-    amountPaid: req.body.amount,
-    paidOn: details.update_time,
-    name: userDetails.name,
-    email: payload.email,
-    phnum: userDetails.phnum,
-  });
+  orders.push(invoice);
+
   var user_id = payload.id;
 
   User.findByIdAndUpdate(user_id, { orders: orders }, function (err, docs) {

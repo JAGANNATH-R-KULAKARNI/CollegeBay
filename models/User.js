@@ -22,6 +22,8 @@ const userSchema = new mongoose.Schema(
     },
     orders: [
       {
+        receipt: { type: String },
+        paymentId: { type: String },
         orderId: { type: String }, //details.id
         cart: {
           type: [
@@ -43,6 +45,11 @@ const userSchema = new mongoose.Schema(
         name: { type: String },
         email: { type: String },
         phnum: { type: String },
+        address: { type: String },
+        city: { type: String },
+        country: { type: String },
+        state: { type: String },
+        pincode: { type: String },
       },
     ],
   },

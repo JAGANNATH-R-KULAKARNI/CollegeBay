@@ -109,6 +109,29 @@ export default function Payment() {
       });
   }
 
+  async function razorPayPaymentSuccessful(invoice) {
+    console.log("razorPayPaymentSuccessful");
+    invoice = {
+      ...invoice,
+      cart: cart,
+    };
+
+    console.log(invoice);
+
+    await axios
+      .post("/api/orders/seed", {
+        token: sessionStorage.getItem("collegeBay"),
+        invoice: invoice,
+      })
+      .then(async (u) => {
+        console.log(u);
+        await deleteCartItem();
+      })
+      .catch((err) => {
+        console.log(err.response.message);
+      });
+  }
+
   async function deleteCartItem() {
     await axios
       .post("/api/cart/seed", {
@@ -136,6 +159,7 @@ export default function Payment() {
         amountUSD={amountUSD}
         deleteCartItem={deleteCartItem}
         myOrdersUpdate={myOrdersUpdate}
+        razorPayPaymentSuccessful={razorPayPaymentSuccessful}
       />
     </div>
   );

@@ -16,6 +16,7 @@ import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import PayPalUI from "./methods/PayPal";
+import RazorPayUI from "./methods/RazorPay";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
@@ -114,16 +115,13 @@ export default function Checkout(props) {
 
   const PAYMENT_BUTTON =
     paymentType == 0 ? (
-      <PayPalUI
-        totalAmount={props.amountUSD}
-        deleteCartItem={orderPlaced}
-        myOrdersUpdate={props.myOrdersUpdate}
+      <RazorPayUI
         userDetails={getUserDetails()}
+        amount={props.totalAmount}
+        razorPayPaymentSuccessful={props.razorPayPaymentSuccessful}
       />
-    ) : paymentType == 1 ? (
-      <h2>Stripe</h2>
     ) : (
-      <h2>Cash</h2>
+      <h2>Cash On Delivery</h2>
     );
   return (
     <ThemeProvider theme={theme}>

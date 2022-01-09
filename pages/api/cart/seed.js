@@ -9,6 +9,7 @@ const handler = nc();
 handler.post(async (req, res) => {
   await db.connect();
   const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
+
   let user = await User.find({ email: payload.email });
 
   if (req.body.delete == true) {

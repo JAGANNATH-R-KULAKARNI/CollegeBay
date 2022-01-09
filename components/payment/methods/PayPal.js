@@ -6,7 +6,9 @@ function Paypal(props) {
       amount={props.totalAmount}
       currency="USD"
       shippingPreference="NO_SHIPPING"
-      // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+      options={{
+        merchantId: "AHUQcCfEx4qtQAyCmw6xGze3r2YaABAMD0fgXwrZ-uYmce.aYvaN8T3F",
+      }}
       onSuccess={(details, data) => {
         alert("Transaction completed by " + details.payer.name.given_name);
         console.log("details after payment");

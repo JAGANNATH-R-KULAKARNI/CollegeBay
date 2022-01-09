@@ -91,7 +91,7 @@ export default function MyOrders() {
                   <div
                     style={{
                       width: "200px",
-                      height: "100px",
+                      height: "120px",
                       border: "2px solid black",
                       paddingLeft: "5%",
                     }}
@@ -101,6 +101,8 @@ export default function MyOrders() {
                       Amount Paid : {item.amountPaid}
                       <br />
                       Cart(length) : {item.cart.length}
+                      <br />
+                      <button>Print Receipt</button>
                     </h6>
                   </div>
                   <br />
