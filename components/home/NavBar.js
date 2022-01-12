@@ -181,13 +181,9 @@ function Navbar() {
               <Button
                 className={styles.btn + " " + styles.btn_glow}
                 style={{ backgroundColor: Colors.Purple, color: "white" }}
+                onClick={() => router.push("/sell")}
               >
-                <a
-                  href="/sell"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Sell
-                </a>
+                Sell
               </Button>
             </li>
           </ul>

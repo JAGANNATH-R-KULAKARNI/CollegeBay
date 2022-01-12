@@ -37,53 +37,41 @@ const payments = [
   { name: "Expiry date", detail: "04/2024" },
 ];
 
-export default function Review() {
+//  name: name,
+//   category: category,
+//   imageUrl: imageUrl,
+//   price: price,
+//   brand: brand,
+//   description: description,
+//   nameOfShop: nameOfShop,
+//   address: address,
+//   email: email,
+//   phnum: phnum,
+//   keyId: keyId,
+//   secretKey: secretKey,
+export default function Review(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
-
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
-          </Typography>
-        </ListItem>
+        <ul>
+          <li>NAME : {props.data.nameOfProduct}</li>
+          <li>CATEGORY : {props.data.category}</li>
+          <li>PRICE : {props.data.price}</li>
+          <li>BRAND : {props.data.brand}</li>
+          <li>DESCRIPTION : {props.data.description}</li>
+          <li>NAME OF SHOP : {props.data.name}</li>
+          <li>ADDRESS : {props.data.address}</li>
+          <li>EMAIL : {props.data.email}</li>
+          <li>PHNUM : {props.data.phnum}</li>
+          {/* <li>KEY ID : {props.data.keyId}</li>
+          <li>SECRET KEY : {props.data.secretKey}</li> */}
+          <br />
+          <img src={props.data.imageUrl} width="30%" height="auto" />
+        </ul>
       </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
     </React.Fragment>
   );
 }

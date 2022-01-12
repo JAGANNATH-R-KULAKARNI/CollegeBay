@@ -5,7 +5,20 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-export default function PaymentForm() {
+// nameOfShop = { nameOfShop };
+// address = { address };
+// email = { email };
+// phnum = { phnum };
+// keyId = { keyId };
+// secretKey = { secretKey };
+// setNameOfShop = { setNameOfShop };
+// setAddress = { setAddress };
+// setEmail = { setEmail };
+// setPhnum = { setPhnum };
+// setKeyId = { setKeyId };
+// setSecretKey = { setSecretKey };
+
+export default function PaymentForm(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -14,50 +27,88 @@ export default function PaymentForm() {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <TextField
-            required
-            id="cardName"
-            label="Name on card"
+            id="shopName"
+            label="Name Of Shop/Person"
             fullWidth
-            autoComplete="cc-name"
+            value={props.nameOfShop}
+            onChange={(e) => props.setNameOfShop(e.target.value)}
+            type="name"
+            autoComplete="name"
+            variant="standard"
+          />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <TextField
+            id="address"
+            label="Address"
+            fullWidth
+            value={props.address}
+            onChange={(e) => props.setAddress(e.target.value)}
+            type="address"
+            helperText="Address Of Shop"
+            autoComplete="address"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            required
-            id="cardNumber"
-            label="Card number"
+            id="emailProduct"
+            label="Email"
             fullWidth
-            autoComplete="cc-number"
+            value={props.email}
+            onChange={(e) => props.setEmail(e.target.value)}
+            type="email"
+            helperText="Commercial Email"
+            autoComplete="email"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            required
-            id="expDate"
-            label="Expiry date"
+            id="productPhNumber"
+            label="Phone Number"
+            type="number"
+            value={props.phnum}
+            onChange={(e) => props.setPhnum(e.target.value)}
+            helperText="Commercial Phone Number"
             fullWidth
-            autoComplete="cc-exp"
+            autoComplete="number"
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
-            required
-            id="cvv"
-            label="CVV"
-            helperText="Last three digits on signature strip"
+            id="razorPayKeyId"
+            label="Key Id"
+            type="password"
+            helperText="RazorPay Key Id"
             fullWidth
-            autoComplete="cc-csc"
+            value={props.keyId}
+            onChange={(e) => props.setKeyId(e.target.value)}
+            autoComplete="number"
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
+        <Grid item xs={12} md={6}>
+          <TextField
+            id="secretKeyRazorPay"
+            label="Secret key"
+            type="password"
+            helperText="RazorPay Secret Key"
+            fullWidth
+            value={props.secretKey}
+            onChange={(e) => props.setSecretKey(e.target.value)}
+            autoComplete="number"
+            variant="standard"
           />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <h1>Verify Email</h1>
         </Grid>
       </Grid>
     </React.Fragment>

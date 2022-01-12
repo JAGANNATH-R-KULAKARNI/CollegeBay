@@ -62,7 +62,9 @@ export default function Home() {
         <br />
         <br />
         <br />
-        <SellUI />
+        <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+          <SellUI />
+        </div>
       </div>
     </div>
   );

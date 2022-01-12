@@ -12,29 +12,106 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AddressForm from "./ProductDetails";
-import PaymentForm from "./VerificationForm";
+import ProductDetails from "./ProductDetails";
+import VerificationForm from "./VerificationForm";
 import Review from "./Review";
-
-const steps = ["Product Details", "Verification", "Review Product"];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error("Unknown step");
-  }
-}
+import axios from "axios";
 
 const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [productImage, setProductImage] = React.useState(null);
+
+  const steps = ["Details", "Verify", "Review"];
+
+  const [name, setName] = React.useState("");
+  const [category, setCategory] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState(null);
+  const [price, setPrice] = React.useState(null);
+  const [brand, setBrand] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [nameOfShop, setNameOfShop] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [phnum, setPhnum] = React.useState("");
+  const [keyId, setKeyId] = React.useState("");
+  const [secretKey, setSecretKey] = React.useState("");
+
+  function getDetails() {
+    return {
+      nameOfProduct: name,
+      category: category,
+      imageUrl: imageUrl,
+      price: price,
+      brand: brand,
+      description: description,
+      name: nameOfShop,
+      address: address,
+      email: email,
+      phnum: phnum,
+    };
+  }
+
+  async function hostProduct() {
+    await axios
+      .post("/api/products/seed", {
+        token: sessionStorage.getItem("collegeBay"),
+        product: getDetails(),
+        keyId: keyId,
+        secretKey: secretKey,
+      })
+      .then((u) => {
+        console.log("here after API request");
+        console.log(u);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return (
+          <ProductDetails
+            name={name}
+            category={category}
+            price={price}
+            brand={brand}
+            imageUrl={imageUrl}
+            description={description}
+            setName={setName}
+            setCategory={setCategory}
+            setImageUrl={setImageUrl}
+            setPrice={setPrice}
+            setBrand={setBrand}
+            setDescription={setDescription}
+          />
+        );
+      case 1:
+        return (
+          <VerificationForm
+            nameOfShop={nameOfShop}
+            address={address}
+            email={email}
+            phnum={phnum}
+            keyId={keyId}
+            secretKey={secretKey}
+            setNameOfShop={setNameOfShop}
+            setAddress={setAddress}
+            setEmail={setEmail}
+            setPhnum={setPhnum}
+            setKeyId={setKeyId}
+            setSecretKey={setSecretKey}
+          />
+        );
+      case 2:
+        return <Review data={getDetails()} />;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -70,9 +147,7 @@ export default function Checkout() {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  Your Product Have been added to our Shop
                 </Typography>
               </React.Fragment>
             ) : (
@@ -87,10 +162,14 @@ export default function Checkout() {
 
                   <Button
                     variant="contained"
-                    onClick={handleNext}
+                    onClick={
+                      activeStep === steps.length - 1 ? hostProduct : handleNext
+                    }
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    {activeStep === steps.length - 1
+                      ? "Host Your Product"
+                      : "Next"}
                   </Button>
                 </Box>
               </React.Fragment>

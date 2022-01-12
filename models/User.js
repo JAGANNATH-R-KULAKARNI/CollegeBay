@@ -52,6 +52,23 @@ const userSchema = new mongoose.Schema(
         pincode: { type: String },
       },
     ],
+
+    products: [
+      {
+        nameOfProduct: { type: String },
+        category: { type: String },
+        imageUrl: { type: String },
+        price: { type: Number },
+        brand: { type: String },
+        description: { type: String },
+        name: { type: String },
+        address: { type: String },
+        email: { type: String },
+        phnum: { type: String },
+      },
+    ],
+    keyId: { type: String },
+    secretKey: { type: String },
   },
   {
     timestamps: true,

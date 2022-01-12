@@ -11,13 +11,9 @@ import Select from "@mui/material/Select";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
+import DropzoneUI from "./subcomponents/DropZone";
 
-export default function AddressForm() {
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+export default function ProductDetails(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -31,6 +27,8 @@ export default function AddressForm() {
             label="Name Of Product"
             fullWidth
             type="name"
+            value={props.name}
+            onChange={(e) => props.setName(e.target.value)}
             autoComplete="name"
             variant="standard"
           />
@@ -44,6 +42,8 @@ export default function AddressForm() {
               labelId="demo-simple-select-standard-label"
               id="categoryOfProduct"
               fullWidth
+              value={props.category}
+              onChange={(e) => props.setCategory(e.target.value)}
               label="Category Of Product"
             >
               <MenuItem value={10}>Book</MenuItem>
@@ -54,15 +54,11 @@ export default function AddressForm() {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          {/* <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          /> */}
-          Image DropBox
+          Upload The Image of Product
+          <DropzoneUI
+            setImageUrl={props.setImageUrl}
+            imageUrl={props.imageUrl}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -70,6 +66,8 @@ export default function AddressForm() {
             name="price"
             label="Set a Price"
             fullWidth
+            value={props.price}
+            onChange={(e) => props.setPrice(e.target.value)}
             type="number"
             autoComplete="price"
             variant="standard"
@@ -79,20 +77,22 @@ export default function AddressForm() {
           <TextField
             id="brand"
             name="brand"
+            value={props.brand}
+            onChange={(e) => props.setBrand(e.target.value)}
             label="Brand Name"
             fullWidth
             variant="standard"
           />
         </Grid>
-        <Grid item xs={3}>
-          Description Of Product (minimum 50 words)
-        </Grid>
-        <Grid item xs={9}>
+
+        <Grid item xs={12}>
           <TextField
             id="DescriptionOfProduct"
-            label="Description"
+            label="Description Of Product"
             fullWidth
             multiline
+            value={props.description}
+            onChange={(e) => props.setDescription(e.target.value)}
             rows={4}
             defaultValue=""
           />

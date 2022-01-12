@@ -33,13 +33,13 @@ const createOrder = async ({ amount, payload }) => {
       currency: "INR",
       receipt: receipt,
     };
-
+    console.log("its fine");
     const order = await instance.orders.create(options);
     if (!order) {
       console.log("Order creation failed", res.body);
       return res.send({ message: "order creatation failed", status: 0 });
     }
-
+    console.log("hmm hmm");
     return {
       order: order,
       receipt: receipt,
@@ -59,7 +59,7 @@ handler.post(async (req, res) => {
     const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
 
     const { amount } = req.body;
-
+    console.log("lol");
     const { order, receipt } = await createOrder({
       amount,
       payload,
