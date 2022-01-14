@@ -19,6 +19,10 @@ import NavBar from "../components/home/NavBar";
 import NProgress from "nprogress";
 import Router from "next/router";
 import "nprogress/nprogress.css";
+import NavBarForAuth from "../components/auth/NavBarForAuth";
+import { useRouter } from "next/router";
+import * as c from "../utils/Colors";
+
 NProgress.configure({ showSpinner: false });
 
 Router.events.on("routeChangeStart", (url) => {
@@ -44,6 +48,7 @@ function Copyright() {
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const router = useRouter();
 
   return (
     <CacheProvider value={emotionCache}>
@@ -55,28 +60,23 @@ export default function MyApp(props) {
         />
       </Head>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <NavBar />
-          <br />
-          <br />
-          <Component {...pageProps} />
-          <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-            <Typography variant="h6" align="center" gutterBottom>
-              Footer
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              align="center"
-              color="text.secondary"
-              component="p"
-            >
-              Something here to give the footer a purpose!
-            </Typography>
-            <Copyright />
-          </Box>
-        </ThemeProvider>
+        <div style={{ backgroundColor: c.c2 }}>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            {router.pathname == "/auth/signin" ||
+            router.pathname == "/auth/signup" ? (
+              <NavBarForAuth />
+            ) : (
+              <NavBar />
+            )}
+            <br />
+            <br />
+
+            <Component {...pageProps} />
+            <Box sx={{ bgcolor: c.c2, p: 6 }} component="footer"></Box>
+          </ThemeProvider>
+        </div>
       </Provider>
     </CacheProvider>
   );

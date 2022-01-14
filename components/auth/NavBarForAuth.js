@@ -4,7 +4,7 @@ import * as c from "../../utils/Colors";
 import styles from "../../styles/auth/NavBar.module.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-function SignUp() {
+function NavBarForAuth() {
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
   const m3 = useMediaQuery("(min-width:1000px)");
@@ -57,4 +57,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default NavBarForAuth;
