@@ -23,58 +23,69 @@ export default function Cart() {
   const router = useRouter();
 
   async function getTheData() {
-    console.log(sessionStorage.getItem("collegeBay"));
-    await axios
-      .post("/api/auth/verify", {
-        token: sessionStorage.getItem("collegeBay"),
-      })
-      .then((u) => {
-        console.log("result from verify");
-        console.log(u);
+    try {
+      await axios
+        .post("/api/auth/verify", {
+          token: sessionStorage.getItem("collegeBay"),
+        })
+        .then((u) => {
+          console.log("result from verify");
+          console.log(u);
 
-        if (!u["data"].currentUser) router.push("/auth/signin");
-      })
-      .catch((err) => {
-        console.log(err);
-        router.push("/auth/signin");
-      });
+          if (!u["data"].currentUser) router.push("/auth/signin");
+        })
+        .catch((err) => {
+          console.log(err);
+          router.push("/auth/signin");
+        });
+    } catch (err) {
+      console.log(err.message);
+      router.push("/auth/signin");
+    }
   }
 
   async function getCart() {
-    console.log(sessionStorage.getItem("collegeBay"));
-    await axios
-      .post("/api/cart", {
-        token: sessionStorage.getItem("collegeBay"),
-      })
-      .then((u) => {
-        console.log("result from cart api");
-        console.log(u["data"]);
-        dispatch(justUpdate(u["data"].cart.length));
-        setCart(u["data"].cart);
-        let sum = 0;
-        u["data"].cart.map((item) => {
-          sum = sum + item.price;
+    try {
+      await axios
+        .post("/api/cart", {
+          token: sessionStorage.getItem("collegeBay"),
+        })
+        .then((u) => {
+          console.log("result from cart api");
+          console.log(u["data"]);
+          dispatch(justUpdate(u["data"].cart.length));
+          setCart(u["data"].cart);
+          let sum = 0;
+          u["data"].cart.map((item) => {
+            sum = sum + item.price;
+          });
+          setTotalAmount(sum);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setTotalAmount(sum);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   async function deleteCartItem(route) {
-    await axios
-      .post("/api/cart/seed", {
-        route: route,
-        token: sessionStorage.getItem("collegeBay"),
-        delete: true,
-      })
-      .then((u) => {
-        getCart();
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+    try {
+      await axios
+        .post("/api/cart/seed", {
+          route: route,
+          token: sessionStorage.getItem("collegeBay"),
+          delete: true,
+        })
+        .then((u) => {
+          getCart();
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   useEffect(() => {
@@ -117,13 +128,4 @@ export default function Cart() {
       </Grid>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  return {
-    props: {
-      cart: [],
-      cartLen: 0,
-    },
-  };
 }

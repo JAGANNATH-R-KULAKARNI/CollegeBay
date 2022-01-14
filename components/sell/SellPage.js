@@ -16,19 +16,19 @@ import ProductDetails from "./ProductDetails";
 import VerificationForm from "./VerificationForm";
 import Review from "./Review";
 import axios from "axios";
+import { CatchingPokemonTwoTone } from "@mui/icons-material";
 
 const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [productImage, setProductImage] = React.useState(null);
 
   const steps = ["Details", "Verify", "Review"];
 
   const [name, setName] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState(null);
-  const [price, setPrice] = React.useState(null);
+  const [price, setPrice] = React.useState(-1);
   const [brand, setBrand] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [nameOfShop, setNameOfShop] = React.useState("");
@@ -54,20 +54,26 @@ export default function Checkout() {
   }
 
   async function hostProduct() {
-    await axios
-      .post("/api/products/seed", {
-        token: sessionStorage.getItem("collegeBay"),
-        product: getDetails(),
-        keyId: keyId,
-        secretKey: secretKey,
-      })
-      .then((u) => {
-        console.log("here after API request");
-        console.log(u);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios
+        .post("/api/products/seed", {
+          token: sessionStorage.getItem("collegeBay"),
+          product: getDetails(),
+          keyId: keyId,
+          secretKey: secretKey,
+        })
+        .then((u) => {
+          console.log("here after API request");
+          console.log(u);
+          handleNext();
+        })
+        .catch((err) => {
+          console.log(err);
+          handleNext();
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   function getStepContent(step) {
@@ -114,6 +120,32 @@ export default function Checkout() {
   }
 
   const handleNext = () => {
+    if (activeStep == 0) {
+      if (
+        name.length == 0 ||
+        category.length == 0 ||
+        price == -1 ||
+        !imageUrl ||
+        brand.length == 0 ||
+        description.length == 0
+      ) {
+        alert("All Fields should be filled");
+        return;
+      }
+    } else if (activeStep == 1) {
+      if (
+        nameOfShop.length == 0 ||
+        address.length == 0 ||
+        email.length == 0 ||
+        phnum.length == 0 ||
+        keyId.length == 0 ||
+        secretKey.length == 0
+      ) {
+        alert("All Fields should be filled");
+        return;
+      }
+    }
+
     setActiveStep(activeStep + 1);
   };
 
@@ -134,11 +166,12 @@ export default function Checkout() {
             Sell Your Product
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
+            {steps &&
+              steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
           </Stepper>
           <React.Fragment>
             {activeStep === steps.length ? (

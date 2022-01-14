@@ -17,38 +17,44 @@ export default function Home() {
   const router = useRouter();
 
   async function getTheData() {
-    console.log(sessionStorage.getItem("collegeBay"));
-    await axios
-      .post("/api/auth/verify", {
-        token: sessionStorage.getItem("collegeBay"),
-      })
-      .then((u) => {
-        console.log("result from verify");
-        console.log(u);
+    try {
+      await axios
+        .post("/api/auth/verify", {
+          token: sessionStorage.getItem("collegeBay"),
+        })
+        .then((u) => {
+          console.log("result from verify");
+          console.log(u);
 
-        if (!u["data"].currentUser) router.push("/auth/signin");
-      })
-      .catch((err) => {
-        console.log(err);
-        router.push("/auth/signin");
-      });
+          if (!u["data"].currentUser) router.push("/auth/signin");
+        })
+        .catch((err) => {
+          console.log(err);
+          router.push("/auth/signin");
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   async function getCart() {
-    console.log(sessionStorage.getItem("collegeBay"));
-    await axios
-      .post("/api/cart", {
-        token: sessionStorage.getItem("collegeBay"),
-      })
-      .then((u) => {
-        console.log("result from cart api(index.js)");
-        console.log(u["data"]);
-        console.log(typeof u["data"].cart);
-        dispatch(justUpdate(u["data"].cart.length));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios
+        .post("/api/cart", {
+          token: sessionStorage.getItem("collegeBay"),
+        })
+        .then((u) => {
+          console.log("result from cart api(index.js)");
+          console.log(u["data"]);
+          console.log(typeof u["data"].cart);
+          dispatch(justUpdate(u["data"].cart.length));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   useEffect(() => {

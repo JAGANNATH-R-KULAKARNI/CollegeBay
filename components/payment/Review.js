@@ -44,17 +44,18 @@ export default function Review(props) {
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
+        {products &&
+          products.map((product) => (
+            <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={product.name} secondary={product.desc} />
+              <Typography variant="body2">{product.price}</Typography>
+            </ListItem>
+          ))}
 
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            {props.totalAmount}
+            {props.totalAmount ? props.totalAmount : 0}
           </Typography>
         </ListItem>
       </List>
@@ -71,16 +72,21 @@ export default function Review(props) {
             Payment details
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
+            {payments &&
+              payments.map((payment) => (
+                <React.Fragment key={payment.name}>
+                  <Grid item xs={6}>
+                    <Typography gutterBottom>
+                      {payment.name && payment.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography gutterBottom>
+                      {payment.detail && payment.detail}
+                    </Typography>
+                  </Grid>
+                </React.Fragment>
+              ))}
           </Grid>
         </Grid>
       </Grid>

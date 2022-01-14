@@ -33,114 +33,116 @@ export default function Album(props) {
   const myState = useSelector((state) => state.changeCartLen);
   const [products, setProducts] = React.useState(null);
   const dispatch = useDispatch();
+
   const matches = useMediaQuery("(min-width:700px)");
-  const addToCartHandler = async (route) => {
-    await axios
-      .post("/api/cart/seed", {
-        route: route,
-        token: sessionStorage.getItem("collegeBay"),
-        delete: false,
-      })
-      .then((u) => {
-        console.log(u["data"]);
-        console.log(u["data"].len);
-        dispatch(justUpdate(u["data"].len));
-        sortItOut2(u["data"].cart);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+
+  const addToCartHandler = async (route, email) => {
+    try {
+      await axios
+        .post("/api/cart/seed", {
+          route: route,
+          email: email,
+          token: sessionStorage.getItem("collegeBay"),
+          delete: false,
+        })
+        .then((u) => {
+          dispatch(justUpdate(u["data"].len));
+          console.log("its cart");
+          console.log(u);
+          sortItOut2(u["data"].cart);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
   };
   async function sortItOut2(cart) {
     if (!cart) return;
-
+    console.log("here");
     const hash = {};
 
-    cart.map((item) => {
-      hash[item] = true;
-    });
+    cart &&
+      cart.map((item) => {
+        hash[item.route] = true;
+      });
 
-    const products = props.products.map((item) => {
-      if (hash[item.route]) {
-        return {
-          ...item,
-          presentInCart: true,
-        };
-      } else {
-        return {
-          ...item,
-          presentInCart: false,
-        };
-      }
-    });
+    const products =
+      props.products &&
+      props.products.map((item) => {
+        if (hash[item.route]) {
+          return {
+            ...item,
+            presentInCart: true,
+          };
+        } else {
+          return {
+            ...item,
+            presentInCart: false,
+          };
+        }
+      });
 
     setProducts(products);
   }
   async function sortItOut(cart) {
+    if (!cart) return;
     const hash = {};
 
-    cart.map((item) => {
-      hash[item.route] = true;
-    });
+    cart &&
+      cart.map((item) => {
+        hash[item.route] = true;
+      });
 
-    const products = props.products.map((item) => {
-      if (hash[item.route]) {
-        return {
-          ...item,
-          presentInCart: true,
-        };
-      } else {
-        return {
-          ...item,
-          presentInCart: false,
-        };
-      }
-    });
+    const products =
+      props.products &&
+      props.products.map((item) => {
+        if (hash[item.route]) {
+          return {
+            ...item,
+            presentInCart: true,
+          };
+        } else {
+          return {
+            ...item,
+            presentInCart: false,
+          };
+        }
+      });
 
     setProducts(products);
   }
 
   async function getCart() {
-    console.log(sessionStorage.getItem("collegeBay"));
-    await axios
-      .post("/api/cart", {
-        token: sessionStorage.getItem("collegeBay"),
-      })
-      .then((u) => {
-        console.log("result from cart api(album.js)");
-        console.log(props.products);
-        console.log(u["data"].cart);
-        sortItOut(u["data"].cart);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios
+        .post("/api/cart", {
+          token: sessionStorage.getItem("collegeBay"),
+        })
+        .then((u) => {
+          console.log("result from cart api(album.js)");
+          console.log(props.products);
+          console.log(u["data"].cart);
+          sortItOut(u["data"].cart);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   useEffect(() => {
     getCart();
   }, []);
-  // const deleteCartHandler = async (route) => {
-  //   await axios
-  //     .delete("/api/cart/seed", {
-  //       route: route,
-  //     })
-  //     .then((u) => {
-  //       console.log(u["data"]);
-  //       console.log(u["data"].len);
-  //       dispatch(justUpdate(u["data"].len));
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response.data);
-  //     });
-  // };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: "background.default",
@@ -184,7 +186,6 @@ export default function Album(props) {
           </Container>
         </Box>
         <Container sx={{ py: 8 }}>
-          {/* End hero unit */}
           <Grid container spacing={4}>
             {products &&
               products.map((card) => (
@@ -261,7 +262,7 @@ export default function Album(props) {
                             : Colors.Yellow,
                           color: "white",
                         }}
-                        onClick={() => addToCartHandler(card.route)}
+                        onClick={() => addToCartHandler(card.route, card.email)}
                       >
                         {card.presentInCart ? "Added To Cart" : "Add To Cart"}
                       </Button>

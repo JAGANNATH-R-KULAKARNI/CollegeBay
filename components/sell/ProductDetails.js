@@ -46,10 +46,10 @@ export default function ProductDetails(props) {
               onChange={(e) => props.setCategory(e.target.value)}
               label="Category Of Product"
             >
-              <MenuItem value={10}>Book</MenuItem>
-              <MenuItem value={20}>Pdf</MenuItem>
-              <MenuItem value={30}>Instrument</MenuItem>
-              <MenuItem value={30}>Code</MenuItem>
+              <MenuItem value="Book">Book</MenuItem>
+              <MenuItem value="Pdf">Pdf</MenuItem>
+              <MenuItem value="Instrument">Instrument</MenuItem>
+              <MenuItem value="Code">Code</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -66,7 +66,7 @@ export default function ProductDetails(props) {
             name="price"
             label="Set a Price"
             fullWidth
-            value={props.price}
+            value={props.price == -1 ? null : props.price}
             onChange={(e) => props.setPrice(e.target.value)}
             type="number"
             autoComplete="price"

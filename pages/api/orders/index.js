@@ -6,17 +6,23 @@ import jwt from "jsonwebtoken";
 const handler = nc();
 
 handler.post(async (req, res) => {
-  await db.connect();
-  const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
-  let user = await User.find({ email: payload.email });
-  const orders = user[0].orders;
+  try {
+    await db.connect();
+    const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
+    let user = await User.find({ email: payload.email });
+    const orders = user[0].orders;
 
-  await db.disconnect();
+    await db.disconnect();
 
-  return res.send({
-    message: "Successful got the orders ordered by the user",
-    orders: orders,
-  });
+    return res.send({
+      message: "Successful got the orders ordered by the user",
+      orders: orders,
+    });
+  } catch (err) {
+    return res.send({
+      message: "Something went wrong",
+    });
+  }
 });
 
 export default handler;

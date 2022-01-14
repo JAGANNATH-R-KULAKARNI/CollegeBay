@@ -5,19 +5,6 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-// nameOfShop = { nameOfShop };
-// address = { address };
-// email = { email };
-// phnum = { phnum };
-// keyId = { keyId };
-// secretKey = { secretKey };
-// setNameOfShop = { setNameOfShop };
-// setAddress = { setAddress };
-// setEmail = { setEmail };
-// setPhnum = { setPhnum };
-// setKeyId = { setKeyId };
-// setSecretKey = { setSecretKey };
-
 export default function PaymentForm(props) {
   return (
     <React.Fragment>

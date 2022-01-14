@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { Order } from "./Order";
 
 const userSchema = new mongoose.Schema(
   {
@@ -17,7 +16,12 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     cart: {
-      type: [String],
+      type: [
+        {
+          route: { type: String },
+          email: { type: String },
+        },
+      ],
       default: [],
     },
     orders: [
@@ -37,11 +41,12 @@ const userSchema = new mongoose.Schema(
               rating: { type: Number },
               numReviews: { type: Number },
               countInStock: { type: Number },
+              email: { type: String },
             },
           ],
         },
         amountPaid: { type: Number, required: true },
-        paidOn: { type: String }, //update_time
+        paidOn: { type: String },
         name: { type: String },
         email: { type: String },
         phnum: { type: String },
@@ -65,6 +70,36 @@ const userSchema = new mongoose.Schema(
         address: { type: String },
         email: { type: String },
         phnum: { type: String },
+      },
+    ],
+    soldItems: [
+      {
+        receipt: { type: String },
+        paymentId: { type: String },
+        orderId: { type: String }, //details.id
+        cart: {
+          type: {
+            name: { type: String },
+            route: { type: String },
+            category: { type: String },
+            image: { type: String },
+            price: { type: Number },
+            brand: { type: String },
+            rating: { type: Number },
+            numReviews: { type: Number },
+            countInStock: { type: Number },
+          },
+        },
+        amountPaid: { type: Number, required: true },
+        paidOn: { type: String }, //update_time
+        name: { type: String },
+        email: { type: String },
+        phnum: { type: String },
+        address: { type: String },
+        city: { type: String },
+        country: { type: String },
+        state: { type: String },
+        pincode: { type: String },
       },
     ],
     keyId: { type: String },

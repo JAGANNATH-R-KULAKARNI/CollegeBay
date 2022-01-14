@@ -30,10 +30,6 @@ function Navbar() {
   const bg1 = useMediaQuery("(min-width:700px)");
   const router = useRouter();
 
-  // useEffect(() => {
-  //   fetchProfile();
-  // }, []);
-
   const [click, setclick] = useState(false);
 
   const handleClick = () => setclick(!click);
@@ -96,11 +92,12 @@ function Navbar() {
           display: { xs: "block", md: "none" },
         }}
       >
-        {pages.map((page) => (
-          <MenuItem key={page} onClick={handleCloseNavMenu}>
-            <Typography textAlign="center">{page}</Typography>
-          </MenuItem>
-        ))}
+        {pages &&
+          pages.map((page) => (
+            <MenuItem key={page} onClick={handleCloseNavMenu}>
+              <Typography textAlign="center">{page}</Typography>
+            </MenuItem>
+          ))}
       </Menu>
     </Box>
   );
@@ -119,7 +116,6 @@ function Navbar() {
                   pointerEvents: "stroke",
                 }}
               >
-                {/* {bg1 ? null : MENU} */}
                 <h1
                   style={{
                     color: Purple,
@@ -134,7 +130,7 @@ function Navbar() {
             </Tooltip>
           </Link>
 
-          <ul
+          {/* <ul
             className={
               click
                 ? styles.nav_menu_hidden + " " + styles.active
@@ -186,7 +182,7 @@ function Navbar() {
                 Sell
               </Button>
             </li>
-          </ul>
+          </ul> */}
           {/*
           <ul>
             {bg1 ? null : (
@@ -217,20 +213,15 @@ function Navbar() {
             className={styles.nav_menu}
             style={{ marginRight: bg1 ? "15px" : "-15px" }}
           >
-            {/* {profile ? (
-              <ProfileIconUI
-                type="Logout"
-                Afterclick={signOut}
-                user={userDetail.username}
-                Image={Image}
-              />
-            ) : (
-              <li className={styles.nav_item}>
-                <div className={styles.nav_links} onClick={checkUser}>
-                  LOGIN
-                </div>
-              </li>
-            )} */}
+            <li className={styles.nav_item} onClick={closeMenu}>
+              <Button
+                className={styles.btn + " " + styles.btn_glow}
+                style={{ backgroundColor: Colors.Purple, color: "white" }}
+                onClick={() => router.push("/sell")}
+              >
+                Sell
+              </Button>
+            </li>
             <div
               style={{ paddingRight: "20px" }}
               onClick={() => router.push("/cart")}

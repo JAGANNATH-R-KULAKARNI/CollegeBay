@@ -6,28 +6,59 @@ import jwt from "jsonwebtoken";
 const handler = nc();
 
 handler.post(async (req, res) => {
-  await db.connect();
-  const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
-  let user = await User.find({ email: payload.email });
+  try {
+    await db.connect();
+    const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
+    let user = await User.find({ email: payload.email });
 
-  let orders = user[0].orders;
-  const invoice = req.body.invoice;
+    let orders = user[0].orders;
+    const invoice = req.body.invoice;
 
-  orders.push(invoice);
+    orders.push(invoice);
 
-  var user_id = payload.id;
+    invoice.cart.map(async (item) => {
+      let seller = await User.find({ email: item.email });
+      console.log(
+        "its seller damn it///////////////////////////////////////////////////////////////////////////"
+      );
 
-  User.findByIdAndUpdate(user_id, { orders: orders }, function (err, docs) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Updated  Orders of User : ", docs);
-    }
-  });
+      console.log(seller[0]._id.toString());
+      console.log(seller);
+      let soldItems = seller[0].soldItems;
 
-  await db.disconnect();
+      soldItems.push({
+        ...invoice,
+        amountPaid: item.price,
+      });
 
-  return res.send({ message: "Successful updated Orders page" });
+      User.findByIdAndUpdate(
+        seller[0]._id.toString(),
+        { soldItems: soldItems },
+        function (err, docs) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Updated  Orders of User : ", docs);
+          }
+        }
+      );
+    });
+    var user_id = payload.id;
+
+    User.findByIdAndUpdate(user_id, { orders: orders }, function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Updated  Orders of User : ", docs);
+      }
+    });
+
+    await db.disconnect();
+
+    return res.send({ message: "Successful updated Orders page" });
+  } catch (err) {
+    return res.send({ message: "Something went wrong" });
+  }
 });
 
 export default handler;

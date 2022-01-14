@@ -2,10 +2,6 @@ import React, { useEffect } from "react";
 import CardUI from "./Card";
 
 function Product({ data, deleteCartItem }) {
-  // useEffect(() => {
-  //   console.log("datatat");
-  //   console.log(props.data);
-  // }, []);
   return (
     <div>
       <br />
@@ -14,7 +10,6 @@ function Product({ data, deleteCartItem }) {
         style={{
           width: "100%",
           height: "570px",
-          // backgroundColor: "yellow",
           overflow: "auto",
           paddingLeft: "10%",
           justifyContent: "center",

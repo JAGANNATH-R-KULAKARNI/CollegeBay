@@ -21,11 +21,7 @@ export default function CustomizedBadges(props) {
   const cartLen = useSelector((state) => state.changeCartLen);
   return (
     <IconButton aria-label="cart">
-      <StyledBadge
-        badgeContent={cartLen}
-        // color="primary"
-        style={{ color: "white" }}
-      >
+      <StyledBadge badgeContent={cartLen} style={{ color: "white" }}>
         <ShoppingCartIcon style={{ color: "white" }} />
       </StyledBadge>
     </IconButton>
