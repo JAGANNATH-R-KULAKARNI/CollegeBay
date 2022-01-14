@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddressForm() {
+export default function Name() {
   const classes = useStyles();
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
@@ -51,11 +51,10 @@ export default function AddressForm() {
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <TextField
-          // inputProps={{ className: classes }}
+          type="name"
           id="nameofUser"
           label="Name"
-          placeholder="Placeholder"
-          multiline
+          placeholder="Jagannath R K"
           style={{ width: m1 ? "60%" : "75%", color: c.c1 }}
           sx={{
             input: {

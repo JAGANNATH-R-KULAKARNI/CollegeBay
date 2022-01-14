@@ -84,24 +84,27 @@ export default function Checkout() {
                 <div style={{ height: "30px" }}></div>
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    display: "flex",
+                    // display: "flex",
+                    // justifyContent: "flex-end",
+                    // display: "flex",
                     justifyContent: "center",
                   }}
                 >
-                  {activeStep !== 0 && (
-                    <ButtonUI clicked={handleBack} text="Back" />
-                  )}
-
                   <ButtonUI
                     clicked={handleNext}
-                    text={
-                      activeStep === steps.length - 1 ? "Place order" : "Next"
-                    }
+                    text={activeStep === steps.length - 1 ? "Let's go" : "Next"}
                     width={m1 ? "300px" : "230px"}
                     height="70px"
                   />
+                  <br />
+                  {activeStep !== 0 && (
+                    <ButtonUI
+                      clicked={handleBack}
+                      text="Back"
+                      width={m1 ? "300px" : "230px"}
+                      height="70px"
+                    />
+                  )}
                 </Box>
               </React.Fragment>
             )}

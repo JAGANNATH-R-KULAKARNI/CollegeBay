@@ -13,6 +13,7 @@ function AButton(props) {
         style={{
           width: props.width,
           height: props.height,
+          textAlign: "center",
         }}
       >
         {props.text ? props.text : null}

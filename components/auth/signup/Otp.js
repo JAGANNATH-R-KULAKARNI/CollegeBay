@@ -1,111 +1,70 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import * as c from "../../../utils/Colors";
+import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import OtpInput from "react-otp-input";
 
-export default function AddressForm() {
+const useStyles = makeStyles((theme) => ({
+  input: {
+    color: c.c1,
+  },
+  palette: {
+    primary: {
+      main: c.c1, //your color
+    },
+  },
+}));
+
+export default function Email() {
+  const classes = useStyles();
+  const m1 = useMediaQuery("(min-width:430px)");
+  const m2 = useMediaQuery("(min-width:700px)");
+  const m3 = useMediaQuery("(min-width:1000px)");
+  const m4 = useMediaQuery("(min-width:1300px)");
+  const m5 = useMediaQuery("(min-width:1700px)");
+
+  const [otp, setOtp] = React.useState("");
+
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Shipping address
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
-            fullWidth
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
-            }
-            label="Use this address for payment details"
-          />
-        </Grid>
-      </Grid>
+      <p
+        style={{
+          textAlign: "center",
+          fontSize: m1 ? "36px" : "20px",
+          fontWeight: 900,
+        }}
+      >
+        One-Time-Password
+      </p>
+
+      <p
+        style={{
+          textAlign: "center",
+          fontWeight: 500,
+          fontSize: m1 ? "20px" : "12px",
+        }}
+      >
+        You have received OTP to your email mate.
+      </p>
+      <br />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <OtpInput
+          value={otp}
+          isInputNum={true}
+          onChange={(e) => setOtp(e)}
+          numInputs={4}
+          separator={<span>-jk-</span>}
+          inputStyle={{
+            fontSize: m1 ? "50px" : "40px",
+            borderColor: c.c1,
+          }}
+        />
+      </div>
     </React.Fragment>
   );
 }
