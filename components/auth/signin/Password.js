@@ -39,9 +39,7 @@ export default function Password(props) {
           paddingRight: "10%",
         }}
       >
-        {props.alertMsg
-          ? props.alertMsg
-          : "OK Its almost done. Keep a password "}
+        {props.alertMsg ? props.alertMsg : "Enter your Password"}
       </p>
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>

@@ -14,4 +14,5 @@ const Green = "#FF4B4B";
 // const c2 = "#04293A";
 const c1 = "#583E81";
 const c2 = "#F3F6FB";
+
 export { Purple, Red, Blue, Yellow, Green, c1, c2 };

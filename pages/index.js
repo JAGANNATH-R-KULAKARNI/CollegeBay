@@ -103,7 +103,7 @@ export default function Home() {
     getTheProducts();
   }, []);
 
-  return true ? (
+  return false ? (
     <div> {products ? <Albums products={products} /> : null}</div>
   ) : (
     <div>{RESET}</div>

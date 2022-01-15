@@ -15,7 +15,8 @@ handler.post(async (req, res) => {
 
   if (checkUser) {
     return res.send({
-      message: "User already present",
+      message: `Email ${req.body.email} is already taken.`,
+      status: 0,
     });
   }
 
@@ -28,7 +29,7 @@ handler.post(async (req, res) => {
   await User.insertMany(user);
 
   await db.disconnect();
-  return res.send({ message: "successfully signed Up " });
+  return res.send({ message: "successfully signed Up ", status: 1 });
 });
 
 export default handler;

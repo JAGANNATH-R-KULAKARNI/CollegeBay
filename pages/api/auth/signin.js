@@ -14,6 +14,7 @@ handler.post(async (req, res) => {
   if (!user) {
     return res.send({
       message: "User Not Found",
+      status: 0,
     });
   }
 
@@ -21,7 +22,8 @@ handler.post(async (req, res) => {
 
   if (!found) {
     return res.send({
-      message: "Password is incorrect",
+      message: "Password is Incorrect",
+      status: 0,
     });
   }
 
@@ -38,7 +40,11 @@ handler.post(async (req, res) => {
   );
 
   await db.disconnect();
-  return res.send({ message: "successfully signed In ", token: userJwt });
+  return res.send({
+    message: "Successfully signed In",
+    token: userJwt,
+    status: 1,
+  });
 });
 
 export default handler;

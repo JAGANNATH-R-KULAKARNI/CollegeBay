@@ -11,7 +11,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
-export default function Password(props) {
+export default function Email(props) {
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
   const m3 = useMediaQuery("(min-width:1000px)");
@@ -27,7 +27,7 @@ export default function Password(props) {
           fontWeight: 900,
         }}
       >
-        Password
+        Email
       </p>
 
       <p
@@ -35,13 +35,9 @@ export default function Password(props) {
           textAlign: "center",
           fontWeight: 500,
           fontSize: m1 ? "20px" : "12px",
-          paddingLeft: "10%",
-          paddingRight: "10%",
         }}
       >
-        {props.alertMsg
-          ? props.alertMsg
-          : "OK Its almost done. Keep a password "}
+        {props.alertMsg ? props.alertMsg : "Enter your Email?"}
       </p>
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -65,15 +61,14 @@ export default function Password(props) {
             "& .MuiFormLabel-root": { color: c.c1, fontWeight: 100 },
           }}
         >
-          <InputLabel htmlFor="outlined-adornment-password">
-            Password
-          </InputLabel>
+          <InputLabel htmlFor="outlined-adornment-password">Email</InputLabel>
           <OutlinedInput
-            id="outlined-adornment-password"
-            type={"password"}
-            value={props.password}
-            onChange={(e) => props.setPassword(e.target.value)}
-            label="Password"
+            id="emailSignUp"
+            type={"email"}
+            value={props.email}
+            onChange={(e) => props.setEmail(e.target.value)}
+            label="Email"
+            placeholder="xyz@gmail.com"
             sx={{
               input: {
                 color: c.c1,

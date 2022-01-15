@@ -7,20 +7,11 @@ import TextField from "@mui/material/TextField";
 import * as c from "../../../utils/Colors";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
-const useStyles = makeStyles((theme) => ({
-  input: {
-    color: c.c1,
-  },
-  palette: {
-    primary: {
-      main: c.c1, //your color
-    },
-  },
-}));
-
-export default function Name() {
-  const classes = useStyles();
+export default function Name(props) {
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
   const m3 = useMediaQuery("(min-width:1000px)");
@@ -46,15 +37,14 @@ export default function Name() {
           fontSize: m1 ? "20px" : "12px",
         }}
       >
-        Hey Fella ! Let's start with your name
+        {props.alertMsg
+          ? props.alertMsg
+          : "Hey Fella ! Let's start with your name"}
       </p>
       <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <TextField
-          type="name"
-          id="nameofUser"
-          label="Name"
-          placeholder="Jagannath R K"
+        <FormControl
+          variant="outlined"
           style={{ width: m1 ? "60%" : "75%", color: c.c1 }}
           sx={{
             input: {
@@ -72,7 +62,33 @@ export default function Name() {
             },
             "& .MuiFormLabel-root": { color: c.c1, fontWeight: 100 },
           }}
-        />
+        >
+          <InputLabel htmlFor="outlined-adornment-password">Name</InputLabel>
+          <OutlinedInput
+            id="nameSignUp"
+            type={"name"}
+            value={props.name}
+            onChange={(e) => props.setName(e.target.value)}
+            label="Name"
+            placeholder="Jagannath R K"
+            sx={{
+              input: {
+                color: c.c1,
+              },
+              "& .MuiOutlinedInput-root": {
+                "& > fieldset": {
+                  borderColor: c.c1,
+                },
+              },
+              "& .MuiOutlinedInput-root:hover": {
+                "& > fieldset": {
+                  borderColor: c.c1,
+                },
+              },
+              "& .MuiFormLabel-root": { color: c.c1, fontWeight: 100 },
+            }}
+          />
+        </FormControl>
       </div>
     </React.Fragment>
   );
