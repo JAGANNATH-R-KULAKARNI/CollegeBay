@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import store from "../utils/redux/Store";
 import { Provider } from "react-redux";
-import NavBar from "../components/home/NavBar";
+import NavBar from "../components/NavBar";
 import NProgress from "nprogress";
 import Router from "next/router";
 import "nprogress/nprogress.css";
