@@ -6,6 +6,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
 
 function NavBarForAuth() {
   const router = useRouter();
@@ -30,75 +32,77 @@ function NavBarForAuth() {
 
   return (
     <div>
-      <Paper
-        style={{
-          width: "100%",
-          height: m1 ? "150px" : "90px",
-          backgroundColor: c.c2,
-          position: "fixed",
-        }}
-        elevation={0}
-      >
-        <div
+      <AppBar elevation={0} style={{ backgroundColor: c.c2, height: "100px" }}>
+        <Paper
           style={{
-            paddingLeft: "10%",
-            paddingRight: "10%",
-            paddingTop: "1%",
-            paddingBottom: "5%",
-            color: c.c1,
-            display: "flex",
             width: "100%",
+            height: m1 ? "150px" : "90px",
+            backgroundColor: c.c2,
+            position: "fixed",
           }}
+          elevation={0}
         >
-          <p
-            style={{ fontSize: m1 ? "40px" : "30px", fontWeight: 900 }}
-            className={styles.logo}
-            onClick={() => router.push("/")}
-          >
-            Collegebay
-          </p>
-
-          <p
+          <div
             style={{
-              fontSize: m1 ? "20px" : "15px",
-              fontWeight: 500,
-              marginLeft: m1 ? "70%" : "20%",
-              marginTop: m1 ? "4.2%" : "12.3%",
-              height: m1 ? "30px" : "25px",
+              paddingLeft: "10%",
+              paddingRight: "10%",
+              paddingTop: "1%",
+              paddingBottom: "5%",
+              color: c.c1,
+              display: "flex",
+              width: "100%",
             }}
-            className={styles.logo}
-            onMouseEnter={handlePopoverOpen}
-            onMouseLeave={handlePopoverClose}
           >
-            About Me
-          </p>
-        </div>
-        <Popover
-          id="mouse-over-popover"
-          sx={{
-            pointerEvents: "none",
-          }}
-          open={open}
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          style={{
-            fontSize: "10px",
-          }}
-          onClose={handlePopoverClose}
-          disableRestoreFocus
-        >
-          <Typography sx={{ p: 1 }}>
-            Myself Jagannath R Kulakarni. I am a coder
-          </Typography>
-        </Popover>
-      </Paper>
+            <p
+              style={{ fontSize: m1 ? "40px" : "30px", fontWeight: 900 }}
+              className={styles.logo}
+              onClick={() => router.push("/")}
+            >
+              Collegebay
+            </p>
+
+            <p
+              style={{
+                fontSize: m1 ? "20px" : "15px",
+                fontWeight: 500,
+                marginLeft: m1 ? "70%" : "20%",
+                marginTop: m1 ? "4.2%" : "15.3%",
+                height: m1 ? "30px" : "25px",
+              }}
+              className={styles.logo}
+              onMouseEnter={handlePopoverOpen}
+              onMouseLeave={handlePopoverClose}
+            >
+              About Me
+            </p>
+          </div>
+          <Popover
+            id="mouse-over-popover"
+            sx={{
+              pointerEvents: "none",
+            }}
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            style={{
+              fontSize: "10px",
+            }}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+          >
+            <Typography sx={{ p: 1 }}>
+              Myself Jagannath R Kulakarni. I am a coder
+            </Typography>
+          </Popover>
+        </Paper>
+      </AppBar>
     </div>
   );
 }
