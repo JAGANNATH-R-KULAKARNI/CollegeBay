@@ -13,6 +13,6 @@ const Green = "#FF4B4B";
 // const c1 = "#1A2556";
 // const c2 = "#04293A";
 const c1 = "#583E81";
-const c2 = "#F3F6FB";
-
+// const c2 = "#F3F6FB";
+const c2 = "#FFFFFF";
 export { Purple, Red, Blue, Yellow, Green, c1, c2 };

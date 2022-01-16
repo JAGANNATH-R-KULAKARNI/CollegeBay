@@ -118,7 +118,7 @@ export default function SignUp() {
 
   const generateOTP = async () => {
     try {
-      const refe = Math.floor(Math.random() * 10000 + 1);
+      const refe = Math.floor(Math.random() * (9999 - 1000) + 1000);
       setOtpG(refe);
 
       await axios
@@ -144,6 +144,39 @@ export default function SignUp() {
     }
   };
 
+  const checkUser = async (eml) => {
+    var flag = 1;
+
+    try {
+      await axios
+        .post("/api/auth/checkuser", {
+          email: eml,
+        })
+        .then((u) => {
+          if (!u["data"].status) {
+            setAlert2(`${email} is already taken.`);
+            setAlertType("error");
+            setOpenAlert(true);
+            flag = 0;
+          }
+        })
+        .catch((err) => {
+          setAlert2(`Something went wrong`);
+          setAlertType("error");
+          setOpenAlert(true);
+          flag = 0;
+        });
+    } catch (err) {
+      console.log(err);
+      setAlert2(`Something went wrong`);
+      setAlertType("error");
+      setOpenAlert(true);
+      flag = 0;
+    }
+
+    return flag;
+  };
+
   const otpCheck = (otp) => {
     setOtpU(otp);
 
@@ -160,7 +193,7 @@ export default function SignUp() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep == 0 && name.length <= 3) {
       messageAlert("Name should have a minimum of 4 characters");
       return;
@@ -179,6 +212,13 @@ export default function SignUp() {
       generateUser();
 
       return;
+    }
+
+    if (activeStep == 1) {
+      if (!(await checkUser(email))) {
+        setEmail("");
+        return;
+      }
     }
 
     if (activeStep == 2) {

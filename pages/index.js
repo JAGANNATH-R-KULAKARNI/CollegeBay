@@ -2,7 +2,6 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Albums from "../components/home/Albums";
-import db from "../utils/Db";
 
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -103,7 +102,7 @@ export default function Home() {
     getTheProducts();
   }, []);
 
-  return false ? (
+  return true ? (
     <div> {products ? <Albums products={products} /> : null}</div>
   ) : (
     <div>{RESET}</div>

@@ -22,6 +22,7 @@ import "nprogress/nprogress.css";
 import NavBarForAuth from "../components/auth/NavBarForAuth";
 import { useRouter } from "next/router";
 import * as c from "../utils/Colors";
+import Footer from "../components/Footer";
 
 NProgress.configure({ showSpinner: false });
 
@@ -74,7 +75,8 @@ export default function MyApp(props) {
             <br />
 
             <Component {...pageProps} />
-            <Box sx={{ bgcolor: c.c2, p: 6 }} component="footer"></Box>
+            {/* <Box sx={{ bgcolor: c.c2, p: 6 }} component="footer"></Box> */}
+            <Footer />
           </ThemeProvider>
         </div>
       </Provider>
