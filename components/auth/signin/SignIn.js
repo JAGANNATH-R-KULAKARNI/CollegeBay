@@ -143,9 +143,10 @@ export default function SignIn() {
         onClose={() => setOpenAlert(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         style={{
-          width: m1 ? "20%" : "80%",
+          width: m1 ? "20%" : "90%",
           paddingLeft: m1 ? "0%" : "10%",
           textAlign: "center",
+          // paddingTop: m1 ? "0%" : "20%",
         }}
       >
         <Alert

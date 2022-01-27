@@ -28,6 +28,9 @@ handler.post(async (req, res) => {
     await db.connect();
     const payload = jwt.verify(req.body.token, process.env.JWT_KEY);
 
+    console.log("hey here in profucts");
+    console.log(req.body);
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&");
     let user = await User.find({ email: payload.email });
     var fullProducts = await Product.find({});
 
@@ -55,13 +58,14 @@ handler.post(async (req, res) => {
       countInStock: 10,
       description: [refe.description],
       email: payload.email,
+      pdfOrCodeLink: refe.pdfOrCodeLink,
     };
 
     fullProducts.push(data);
-    console.log("hey");
-    console.log(products);
-    console.log("data");
-    console.log(fullProducts);
+    // console.log("hey");
+    // console.log(products);
+    // console.log("data");
+    // console.log(fullProducts);
 
     var user_id = payload.id;
 

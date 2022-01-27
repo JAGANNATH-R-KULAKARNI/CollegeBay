@@ -8,9 +8,14 @@ import Checkbox from "@mui/material/Checkbox";
 export default function PaymentForm(props) {
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        style={{ fontWeight: "bolder", textAlign: "center" }}
+      >
         Verification
       </Typography>
+      <br />
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <TextField
@@ -67,9 +72,9 @@ export default function PaymentForm(props) {
         <Grid item xs={12} md={6}>
           <TextField
             id="razorPayKeyId"
-            label="Key Id"
+            label="Account No"
             type="password"
-            helperText="RazorPay Key Id"
+            helperText="Your Bank Account Number"
             fullWidth
             value={props.keyId}
             onChange={(e) => props.setKeyId(e.target.value)}
@@ -80,22 +85,15 @@ export default function PaymentForm(props) {
         <Grid item xs={12} md={6}>
           <TextField
             id="secretKeyRazorPay"
-            label="Secret key"
+            label="Code"
             type="password"
-            helperText="RazorPay Secret Key"
+            helperText="IFSC Code"
             fullWidth
             value={props.secretKey}
             onChange={(e) => props.setSecretKey(e.target.value)}
             autoComplete="number"
             variant="standard"
           />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          <h1>Verify Email</h1>
         </Grid>
       </Grid>
     </React.Fragment>

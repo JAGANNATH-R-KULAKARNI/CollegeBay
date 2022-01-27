@@ -17,13 +17,31 @@ import VerificationForm from "./VerificationForm";
 import Review from "./Review";
 import axios from "axios";
 import { CatchingPokemonTwoTone } from "@mui/icons-material";
+import * as c from "../../utils/Colors";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ButtonUI from "./subcomponents/Button";
+import { useRouter } from "next/router";
+import { products as pds, products } from "../../utils/Data";
+import { interpolateAs } from "next/dist/shared/lib/router/router";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const m1 = useMediaQuery("(min-width:430px)");
+  const m2 = useMediaQuery("(min-width:700px)");
+  const m3 = useMediaQuery("(min-width:1000px)");
+  const m4 = useMediaQuery("(min-width:1300px)");
+  const m5 = useMediaQuery("(min-width:1700px)");
 
-  const steps = ["Details", "Verify", "Review"];
+  const router = useRouter();
+  const steps = ["Info", "Verify", "Preview"];
 
   const [name, setName] = React.useState("");
   const [category, setCategory] = React.useState("");
@@ -37,6 +55,11 @@ export default function Checkout() {
   const [phnum, setPhnum] = React.useState("");
   const [keyId, setKeyId] = React.useState("");
   const [secretKey, setSecretKey] = React.useState("");
+  const [pdfOrCodeLink, setPdfOrCodeLink] = React.useState(null);
+  const [msg, setMsg] = React.useState(null);
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alertType, setAlertType] = React.useState("success");
+  const [alertMsg2, setAlert2] = React.useState(null);
 
   function getDetails() {
     return {
@@ -50,6 +73,7 @@ export default function Checkout() {
       address: address,
       email: email,
       phnum: phnum,
+      pdfOrCodeLink: pdfOrCodeLink,
     };
   }
 
@@ -76,6 +100,11 @@ export default function Checkout() {
     }
   }
 
+  function nameHandler(e) {
+    if (e.target.value.length > 10) return;
+
+    setName(e.target.value);
+  }
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -87,12 +116,14 @@ export default function Checkout() {
             brand={brand}
             imageUrl={imageUrl}
             description={description}
-            setName={setName}
+            nameHandler={nameHandler}
             setCategory={setCategory}
             setImageUrl={setImageUrl}
             setPrice={setPrice}
             setBrand={setBrand}
             setDescription={setDescription}
+            pdfOrCodeLink={pdfOrCodeLink}
+            setPdfOrCodeLink={setPdfOrCodeLink}
           />
         );
       case 1:
@@ -129,8 +160,27 @@ export default function Checkout() {
         brand.length == 0 ||
         description.length == 0
       ) {
-        alert("All Fields should be filled");
+        setMsg("All the fields are required");
+        setTimeout(() => {
+          setMsg(null);
+        }, 3000);
+        setAlert2(`All the fields are required`);
+        setAlertType("error");
+        setOpenAlert(true);
         return;
+      }
+
+      if (category == "Pdf" || category == "Code") {
+        if (!pdfOrCodeLink) {
+          setMsg("All the fields are required");
+          setTimeout(() => {
+            setMsg(null);
+          }, 3000);
+          setAlert2(`All the fields are required`);
+          setAlertType("error");
+          setOpenAlert(true);
+          return;
+        }
       }
     } else if (activeStep == 1) {
       if (
@@ -141,7 +191,13 @@ export default function Checkout() {
         keyId.length == 0 ||
         secretKey.length == 0
       ) {
-        alert("All Fields should be filled");
+        setMsg("All the fields are required");
+        setTimeout(() => {
+          setMsg(null);
+        }, 3000);
+        setAlert2(`All the fields are required`);
+        setAlertType("error");
+        setOpenAlert(true);
         return;
       }
     }
@@ -153,23 +209,83 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+  const [index, setIndex] = React.useState(0);
+  async function hostProductSeed() {
+    try {
+      if (index >= pds.length) {
+        alert("thats it");
+        return;
+      }
+      const item = pds[index];
 
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      await axios
+        .post("/api/products/seed", {
+          token: sessionStorage.getItem("collegeBay"),
+          product: item,
+          keyId: item.keyId,
+          secretKey: item.secretKey,
+        })
+        .then((u) => {
+          console.log(`product ${index} seed complete`);
+          setIndex(index + 1);
+        })
+        .catch((err) => {
+          alert("somethin went wrong");
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  // return (
+  //   <div>
+  //     <button onClick={hostProductSeed}>Seed product</button>
+  //   </div>
+  // );
+
+  return (
+    <ThemeProvider theme={theme} elevation={0}>
+      <CssBaseline />
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={() => setOpenAlert(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        style={{
+          width: m1 ? "20%" : "80%",
+          paddingLeft: m1 ? "0%" : "10%",
+          textAlign: "center",
+        }}
+      >
+        <Alert
+          onClose={() => setOpenAlert(false)}
+          severity={alertType}
+          sx={{ width: "100%" }}
+        >
+          {alertMsg2}
+        </Alert>
+      </Snackbar>
+      <Container component="main" maxWidth="sm" sx={{ mb: 4 }} elevation={0}>
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+          elevation={0}
         >
-          <Typography component="h1" variant="h4" align="center">
-            Sell Your Product
+          <Typography
+            component="h3"
+            variant="h5"
+            align="center"
+            style={{ fontWeight: "bolder" }}
+          >
+            {msg ? msg : "Sell Your Product"}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps &&
               steps.map((label) => (
                 <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
+                  <StepLabel>
+                    <div> {label}</div>
+                  </StepLabel>
                 </Step>
               ))}
           </Stepper>
@@ -177,18 +293,33 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you for hosting your product
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your Product Have been added to our Shop
+                  Your Product Has been added to our Shop
                 </Typography>
+                <br />
+                <div onClick={() => router.push("/")}>
+                  <ButtonUI
+                    text="Shop Now"
+                    width="50%"
+                    color={c.c1}
+                    status={true}
+                    size="10px"
+                    handler={null}
+                  />
+                </div>
               </React.Fragment>
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                    <Button
+                      onClick={handleBack}
+                      sx={{ mt: 3, ml: 1 }}
+                      style={{ color: c.c1 }}
+                    >
                       Back
                     </Button>
                   )}
@@ -198,7 +329,7 @@ export default function Checkout() {
                     onClick={
                       activeStep === steps.length - 1 ? hostProduct : handleNext
                     }
-                    sx={{ mt: 3, ml: 1 }}
+                    sx={{ mt: 3, ml: 1, backgroundColor: c.c1 }}
                   >
                     {activeStep === steps.length - 1
                       ? "Host Your Product"

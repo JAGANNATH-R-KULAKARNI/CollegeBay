@@ -8,13 +8,15 @@ function Previews(props) {
       if (!event.target.files || event.target.files.length == 0) {
         throw "select an image before uploading";
       }
+
+      props.setLoading(true);
       console.log(event.target.files[0]);
 
       const formData = new FormData();
       formData.append("file", event.target.files[0]);
       formData.append("upload_preset", "t1qhqiym");
 
-      axios
+      await axios
         .post(
           "https://api.cloudinary.com/v1_1/dcqnau1ur/image/upload",
           formData
@@ -23,6 +25,7 @@ function Previews(props) {
           console.log(u);
           console.log(u["data"].secure_url);
           props.setImageUrl(u["data"].secure_url);
+          props.setLoading(false);
         })
         .catch((err) => {
           console.log(err);

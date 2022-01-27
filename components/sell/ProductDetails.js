@@ -12,23 +12,31 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import DropzoneUI from "./subcomponents/DropZone";
+import { PeopleSharp } from "@mui/icons-material";
 
 export default function ProductDetails(props) {
+  const [loading, setLoading] = React.useState(false);
+
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        style={{ fontWeight: "bolder", textAlign: "center" }}
+      >
         Describe Product
       </Typography>
+      <br />
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12}>
           <TextField
             id="nameOfProduct"
             name="nameOfProduct"
-            label="Name Of Product"
+            label="Name Of Product(max of 10 characters)"
             fullWidth
             type="name"
             value={props.name}
-            onChange={(e) => props.setName(e.target.value)}
+            onChange={props.nameHandler}
             autoComplete="name"
             variant="standard"
           />
@@ -50,6 +58,7 @@ export default function ProductDetails(props) {
               <MenuItem value="Pdf">Pdf</MenuItem>
               <MenuItem value="Instrument">Instrument</MenuItem>
               <MenuItem value="Code">Code</MenuItem>
+              <MenuItem value="Others">Others</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -58,13 +67,30 @@ export default function ProductDetails(props) {
           <DropzoneUI
             setImageUrl={props.setImageUrl}
             imageUrl={props.imageUrl}
+            setLoading={setLoading}
           />
+          {loading ? <h3>Uploading...</h3> : null}
         </Grid>
+        {props.category == "Pdf" || props.category == "Code" ? (
+          <Grid item xs={12} sm={12}>
+            <TextField
+              id="pdfOrCodeLink"
+              name="name"
+              label={`Link of ${props.category}`}
+              fullWidth
+              type="name"
+              value={props.pdfOrCodeLink}
+              onChange={(e) => props.setPdfOrCodeLink(e.target.value)}
+              variant="standard"
+            />
+          </Grid>
+        ) : null}
         <Grid item xs={12} sm={6}>
           <TextField
             id="price"
             name="price"
             label="Set a Price"
+            placeholder="In Rupees"
             fullWidth
             value={props.price == -1 ? null : props.price}
             onChange={(e) => props.setPrice(e.target.value)}
@@ -79,7 +105,7 @@ export default function ProductDetails(props) {
             name="brand"
             value={props.brand}
             onChange={(e) => props.setBrand(e.target.value)}
-            label="Brand Name"
+            label="Branch Name"
             fullWidth
             variant="standard"
           />

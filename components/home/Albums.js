@@ -25,6 +25,12 @@ import { incCart, decCart, justUpdate } from "../../utils/redux/actions";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import CardUI from "./Card";
+import CardUI2 from "./Card2";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css";
+import SwiperCore, { Pagination } from "swiper/core";
 
 const theme = createTheme();
 
@@ -34,7 +40,11 @@ export default function Album(props) {
   const [products, setProducts] = React.useState(null);
   const dispatch = useDispatch();
 
-  const matches = useMediaQuery("(min-width:700px)");
+  const m1 = useMediaQuery("(min-width:430px)");
+  const m2 = useMediaQuery("(min-width:700px)");
+  const m3 = useMediaQuery("(min-width:1000px)");
+  const m4 = useMediaQuery("(min-width:1300px)");
+  const m5 = useMediaQuery("(min-width:1700px)");
 
   const addToCartHandler = async (route, email) => {
     try {
@@ -185,94 +195,71 @@ export default function Album(props) {
             </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }}>
-          <Grid container spacing={4}>
+        <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+          <Swiper
+            direction={"horizontal"}
+            slidesPerView={1}
+            breakpoints={{
+              300: {
+                slidesPerView: 2,
+                spaceBetween: 1,
+              },
+
+              768: {
+                slidesPerView: 1,
+                spaceBetween: 40,
+              },
+              1024: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              1400: {
+                slidesPerView: 5,
+                spaceBetween: 20,
+              },
+            }}
+            pagination={{ clickable: true }}
+            style={{
+              height: "300px",
+            }}
+          >
             {products &&
-              products.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Card
-                    sx={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      sx={{
-                        // 16:9
-                        // pt: "56.25%",
-                        pt: "0%",
-                        height: "70%",
-                      }}
+              products.map((card, index) => (
+                <SwiperSlide
+                  key={index + "books"}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {m1 ? (
+                    <CardUI
                       image={card.image}
-                      alt="random"
+                      data={{
+                        image: card.image,
+                        name: card.name,
+                        price: card.price,
+                        brand: card.brand,
+                        category: card.category,
+                      }}
                     />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="h2"
-                        style={{ color: Colors.Red, height: "60px" }}
-                      >
-                        {card.name}
-                      </Typography>
-                      <Typography style={{ color: Colors.Purple }}>
-                        Price : {card.price}
-                      </Typography>
-                      <Typography style={{ color: Colors.Purple }}>
-                        Category : {card.category}
-                      </Typography>
-                      <div style={{ height: "10px" }}></div>
-                      <Chip
-                        label="In Stock"
-                        style={{
-                          width: matches ? "20%" : "25%",
-                          height: "19px",
-                          backgroundColor: Colors.Blue,
-                          color: "white",
-                          fontSize: "10px",
-                        }}
-                      />
-                    </CardContent>
-
-                    <CardActions>
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        style={{
-                          backgroundColor: Colors.Purple,
-                          color: "white",
-                        }}
-                        onClick={() => router.push(`/product/${card.route}`)}
-                      >
-                        View Product
-                      </Button>
-
-                      <Button
-                        size="small"
-                        disabled={card.presentInCart}
-                        endIcon={
-                          card.presentInCart ? <DoneOutlineIcon /> : null
-                        }
-                        variant="outlined"
-                        style={{
-                          backgroundColor: card.presentInCart
-                            ? Colors.Green
-                            : Colors.Yellow,
-                          color: "white",
-                        }}
-                        onClick={() => addToCartHandler(card.route, card.email)}
-                      >
-                        {card.presentInCart ? "Added To Cart" : "Add To Cart"}
-                      </Button>
-                    </CardActions>
-                    <div style={{ height: "10px" }}></div>
-                  </Card>
-                </Grid>
+                  ) : (
+                    <CardUI2
+                      image={card.image}
+                      data={{
+                        image: card.image,
+                        name: card.name,
+                        price: card.price,
+                        brand: card.brand,
+                        category: card.category,
+                      }}
+                    />
+                  )}
+                </SwiperSlide>
               ))}
-          </Grid>
-        </Container>
+          </Swiper>
+        </div>
       </main>
     </ThemeProvider>
   );

@@ -1,0 +1,90 @@
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ButtonUI from "./Button";
+import * as c from "../../../utils/Colors";
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+export default function ReviewCard(props) {
+  const m1 = useMediaQuery("(min-width:430px)");
+  const m2 = useMediaQuery("(min-width:700px)");
+  const m3 = useMediaQuery("(min-width:1000px)");
+  const m4 = useMediaQuery("(min-width:1300px)");
+  const m5 = useMediaQuery("(min-width:1700px)");
+  const [zoom, setZoom] = React.useState(false);
+
+  return (
+    <Card
+      sx={{
+        maxWidth: 345,
+        minWidth: m1 ? "300px" : "250px",
+        cursor: zoom ? "pointer" : "auto",
+      }}
+      onMouseEnter={() => setZoom(true)}
+      onMouseLeave={() => setZoom(false)}
+      elevation={zoom ? 4 : 1}
+    >
+      <CardMedia
+        component="img"
+        height="194"
+        image={props.image}
+        alt="Paella dish"
+      />
+      <CardContent>
+        <div style={{ display: "flex", justifyContent: "left" }}>
+          <Typography variant="body1" color="text.secondary">
+            {props.data.name}
+          </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            style={{ paddingLeft: m1 ? "55%" : "45%" }}
+          >
+            ₹ {props.data.price}
+          </Typography>
+        </div>
+      </CardContent>
+
+      <ButtonUI
+        text="Add to cart"
+        width="50%"
+        color={c.c1}
+        status={true}
+        size="10px"
+        handler={null}
+      />
+      <ButtonUI
+        text="View Product"
+        width="50%"
+        color={c.c1}
+        status={false}
+        size="10px"
+        handler={null}
+      />
+    </Card>
+  );
+}

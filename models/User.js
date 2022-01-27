@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema(
               numReviews: { type: Number },
               countInStock: { type: Number },
               email: { type: String },
+              pdfOrCodeLink: { type: String, default: null },
             },
           ],
         },
@@ -70,6 +71,7 @@ const userSchema = new mongoose.Schema(
         address: { type: String },
         email: { type: String },
         phnum: { type: String },
+        pdfOrCodeLink: { type: String, default: null },
       },
     ],
     soldItems: [
@@ -88,6 +90,7 @@ const userSchema = new mongoose.Schema(
             rating: { type: Number },
             numReviews: { type: Number },
             countInStock: { type: Number },
+            pdfOrCodeLink: { type: String, default: null },
           },
         },
         amountPaid: { type: Number, required: true },
