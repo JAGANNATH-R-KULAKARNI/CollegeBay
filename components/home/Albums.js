@@ -31,7 +31,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import SwiperCore, { Pagination } from "swiper/core";
+import { Autoplay } from "swiper";
 
+SwiperCore.use([Autoplay]);
 const theme = createTheme();
 
 export default function Album(props) {
@@ -199,6 +201,12 @@ export default function Album(props) {
           <Swiper
             direction={"horizontal"}
             slidesPerView={1}
+            loop={true}
+            autoplay={{
+              delay: 1500,
+              disableOnInteraction: false,
+              reverseDirection: true,
+            }}
             breakpoints={{
               300: {
                 slidesPerView: 2,
@@ -206,11 +214,11 @@ export default function Album(props) {
               },
 
               768: {
-                slidesPerView: 1,
+                slidesPerView: 2,
                 spaceBetween: 40,
               },
               1024: {
-                slidesPerView: 2,
+                slidesPerView: 3,
                 spaceBetween: 10,
               },
               1400: {

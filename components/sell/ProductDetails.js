@@ -32,7 +32,7 @@ export default function ProductDetails(props) {
           <TextField
             id="nameOfProduct"
             name="nameOfProduct"
-            label="Name Of Product(max of 10 characters)"
+            label="Name Of Product(max of 20 characters)"
             fullWidth
             type="name"
             value={props.name}
@@ -89,10 +89,16 @@ export default function ProductDetails(props) {
           <TextField
             id="price"
             name="price"
-            label="Set a Price"
+            label={
+              props.price == 0
+                ? "Set a Price"
+                : `₹ ${parseFloat(1.1 * props.price).toFixed(1)} (${
+                    props.price
+                  }+${parseFloat(0.1 * props.price).toFixed(1)}) (10% charges)`
+            }
             placeholder="In Rupees"
             fullWidth
-            value={props.price == -1 ? null : props.price}
+            value={props.price == 0 ? null : props.price}
             onChange={(e) => props.setPrice(e.target.value)}
             type="number"
             autoComplete="price"

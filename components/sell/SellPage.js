@@ -46,7 +46,7 @@ export default function Checkout() {
   const [name, setName] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState(null);
-  const [price, setPrice] = React.useState(-1);
+  const [price, setPrice] = React.useState(0);
   const [brand, setBrand] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [nameOfShop, setNameOfShop] = React.useState("");
@@ -66,7 +66,7 @@ export default function Checkout() {
       nameOfProduct: name,
       category: category,
       imageUrl: imageUrl,
-      price: price,
+      price: 1.1 * price,
       brand: brand,
       description: description,
       name: nameOfShop,
@@ -101,7 +101,7 @@ export default function Checkout() {
   }
 
   function nameHandler(e) {
-    if (e.target.value.length > 10) return;
+    if (e.target.value.length > 20) return;
 
     setName(e.target.value);
   }

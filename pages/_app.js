@@ -24,14 +24,14 @@ import { useRouter } from "next/router";
 import * as c from "../utils/Colors";
 import Footer from "../components/Footer";
 
-NProgress.configure({ showSpinner: false });
+NProgress.configure({ showSpinner: true });
 
 Router.events.on("routeChangeStart", (url) => {
   NProgress.start();
 });
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
-// Client-side cache, shared for the whole session of the user in the browser.
+
 const clientSideEmotionCache = createEmotionCache();
 
 function Copyright() {

@@ -57,13 +57,17 @@ export default function ReviewCard(props) {
       />
       <CardContent>
         <div style={{ display: "flex", justifyContent: "left" }}>
-          <Typography variant="body1" color="text.secondary">
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            style={{ width: "85%" }}
+          >
             {props.data.name}
           </Typography>
           <Typography
             variant="body1"
             color="text.secondary"
-            style={{ paddingLeft: m1 ? "55%" : "45%" }}
+            // style={{ paddingLeft: m1 ? "55%" : "45%" }}
           >
             ₹ {props.data.price}
           </Typography>
