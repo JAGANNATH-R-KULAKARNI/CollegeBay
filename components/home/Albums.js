@@ -155,12 +155,21 @@ export default function Album(props) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <br />
-      <div style={{ marginTop: m1 ? "0px" : "-50px" }}>
+      <div style={{ marginTop: m1 ? "0px" : "-50px" }} id="booksya">
         <SCom />
       </div>
-      <main>
+      <main style={{ marginTop: m1 ? "0px" : "-100px" }}>
         <div>
-          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+          {/* <div id="booksya"></div>
+          <br />
+          <br /> */}
+
+          <div
+            style={{
+              paddingLeft: "5%",
+              paddingRight: "5%",
+            }}
+          >
             <div
               style={{
                 display: "flex",
@@ -172,6 +181,7 @@ export default function Album(props) {
                 Books & Notes
               </p>
             </div>
+            <div id="instrumentsya"></div>
             <Swiper
               direction={"horizontal"}
               slidesPerView={1}
@@ -248,6 +258,7 @@ export default function Album(props) {
             </Swiper>
           </div>
         </div>
+
         <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
           <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
             <div
@@ -261,6 +272,7 @@ export default function Album(props) {
                 Instruments
               </p>
             </div>
+            <div id="pdfsya"></div>
             <Swiper
               direction={"horizontal"}
               slidesPerView={1}
@@ -426,7 +438,7 @@ export default function Album(props) {
             </Swiper>
           </div>
         </div>
-        <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
+        <div style={{ marginTop: m1 ? "0px" : "-60px" }} id="codeya">
           <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
             <div
               style={{

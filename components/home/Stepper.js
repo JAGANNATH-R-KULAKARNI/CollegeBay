@@ -27,7 +27,7 @@ const images = [
   {
     label: "PDF",
     imgPath:
-      "https://www.nicepng.com/png/full/119-1191225_download-pdf-button-png-download-button.png",
+      "https://commonlook.com/wp-content/uploads/2020/03/How-to-Tell-if-PDF-is-Accessible-Social-Image@2x-8-1920x1080.png",
   },
   {
     label: "Code",

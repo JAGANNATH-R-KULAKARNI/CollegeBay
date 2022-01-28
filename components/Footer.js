@@ -43,8 +43,9 @@ function Footer() {
           <div>
             <h3 style={{ fontSize: m1 ? "20px" : "15px" }}>About</h3>
             <p style={{ fontSize: m1 ? "15px" : "10px" }}>
-              Scanfcode.com CODE WANTS TO BE SIMPLE is an initiative to help the
-              upcoming programmers with the code. Scanfcode focuses on providing
+              CollegeBay is a E-Commerce application, which sells the Books,
+              Pdf, Instruments and Code which are necessary for the college
+              students
             </p>
           </div>
         </Grid>
