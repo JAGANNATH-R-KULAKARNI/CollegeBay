@@ -28,10 +28,10 @@ export default withRouter(ProductUIC);
 
 export async function getServerSideProps(context) {
   const { params } = context;
-  // const pro = params.Product;
 
   await db.connect();
   const product = await Product.findOne({ route: params.Product }).lean();
+
   //The lean option tells Mongoose to skip hydrating the result documents. This makes queries faster and less memory intensive, but the result documents are plain old JavaScript objects (POJOs), not Mongoose documents.
   await db.disconnect();
   // console.log("heyyyyyyyyyy");

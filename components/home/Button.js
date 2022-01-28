@@ -14,7 +14,7 @@ export default function BasicButtons(props) {
         fontSize: props.size,
         borderColor: props.color,
       }}
-      onClick={() => (props.handler ? props.handler(props.buttonId) : null)}
+      onClick={() => (props.handler ? props.handler(props.data) : null)}
     >
       {props.text}
     </Button>

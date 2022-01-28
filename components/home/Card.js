@@ -17,6 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ButtonUI from "./Button";
 import * as c from "../../utils/Colors";
+import { useRouter } from "next/router";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,12 +31,17 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function ReviewCard(props) {
+  const router = useRouter();
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
   const m3 = useMediaQuery("(min-width:1000px)");
   const m4 = useMediaQuery("(min-width:1300px)");
   const m5 = useMediaQuery("(min-width:1700px)");
   const [zoom, setZoom] = React.useState(false);
+
+  const viewProduct = (route) => {
+    router.push(`/product/${route}`);
+  };
 
   return (
     <Card
@@ -88,7 +94,8 @@ export default function ReviewCard(props) {
         color={c.c1}
         status={false}
         size="10px"
-        handler={null}
+        handler={viewProduct}
+        data={props.data.route}
       />
     </Card>
   );

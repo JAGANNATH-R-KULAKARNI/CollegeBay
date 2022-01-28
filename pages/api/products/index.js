@@ -35,4 +35,13 @@ handler.post(async (req, res) => {
   return res.send(finalProducts);
 });
 
+handler.get(async (req, res) => {
+  await db.connect();
+
+  const products = await Product.find({}).lean();
+
+  await db.disconnect();
+  return res.send(products);
+});
+
 export default handler;

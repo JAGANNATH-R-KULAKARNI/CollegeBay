@@ -32,6 +32,7 @@ import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import SwiperCore, { Pagination } from "swiper/core";
 import { Autoplay } from "swiper";
+import SCom from "./StartingComponent";
 
 SwiperCore.use([Autoplay]);
 const theme = createTheme();
@@ -153,122 +154,376 @@ export default function Album(props) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
+      <br />
+      <div style={{ marginTop: m1 ? "0px" : "-50px" }}>
+        <SCom />
+      </div>
       <main>
-        <Box
-          sx={{
-            bgcolor: "background.default",
-            color: "text.primary",
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container maxWidth="sm">
-            <Typography
-              component="h2"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
+        <div>
+          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: m1 ? "-15px" : "-70px",
+              }}
             >
-              Lets Shop
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              Indian retail chain of hypermarket, discount department store, and
-              grocery store
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button
-                variant="contained"
-                style={{ backgroundColor: Colors.Purple }}
-              >
-                Shop Now
-              </Button>
-            </Stack>
-          </Container>
-        </Box>
-        <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
-          <Swiper
-            direction={"horizontal"}
-            slidesPerView={1}
-            loop={true}
-            autoplay={{
-              delay: 1500,
-              disableOnInteraction: false,
-              reverseDirection: true,
-            }}
-            breakpoints={{
-              300: {
-                slidesPerView: 2,
-                spaceBetween: 1,
-              },
+              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                Books & Notes
+              </p>
+            </div>
+            <Swiper
+              direction={"horizontal"}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+                reverseDirection: true,
+              }}
+              breakpoints={{
+                300: {
+                  slidesPerView: 2,
+                  spaceBetween: 1,
+                },
 
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 40,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              1400: {
-                slidesPerView: 5,
-                spaceBetween: 20,
-              },
-            }}
-            pagination={{ clickable: true }}
-            style={{
-              height: "300px",
-            }}
-          >
-            {products &&
-              products.map((card, index) => (
-                <SwiperSlide
-                  key={index + "books"}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {m1 ? (
-                    <CardUI
-                      image={card.image}
-                      data={{
-                        image: card.image,
-                        name: card.name,
-                        price: card.price,
-                        brand: card.brand,
-                        category: card.category,
-                      }}
-                    />
-                  ) : (
-                    <CardUI2
-                      image={card.image}
-                      data={{
-                        image: card.image,
-                        name: card.name,
-                        price: card.price,
-                        brand: card.brand,
-                        category: card.category,
-                      }}
-                    />
-                  )}
-                </SwiperSlide>
-              ))}
-          </Swiper>
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 20,
+                },
+              }}
+              pagination={{ clickable: true }}
+              style={{
+                height: "300px",
+              }}
+            >
+              {products &&
+                products.map((card, index) => {
+                  if (card.category == "Book")
+                    return (
+                      <SwiperSlide
+                        key={index + card.category}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {m1 ? (
+                          <CardUI
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        ) : (
+                          <CardUI2
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        )}
+                      </SwiperSlide>
+                    );
+                })}
+            </Swiper>
+          </div>
+        </div>
+        <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
+          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: m1 ? "-15px" : "-70px",
+              }}
+            >
+              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                Instruments
+              </p>
+            </div>
+            <Swiper
+              direction={"horizontal"}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+                reverseDirection: false,
+              }}
+              breakpoints={{
+                300: {
+                  slidesPerView: 2,
+                  spaceBetween: 1,
+                },
+
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 20,
+                },
+              }}
+              pagination={{ clickable: true }}
+              style={{
+                height: "300px",
+              }}
+            >
+              {products &&
+                products.map((card, index) => {
+                  if (card.category == "Instrument")
+                    return (
+                      <SwiperSlide
+                        key={index + card.category}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {m1 ? (
+                          <CardUI
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        ) : (
+                          <CardUI2
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        )}
+                      </SwiperSlide>
+                    );
+                })}
+            </Swiper>
+          </div>
+        </div>
+        <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
+          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: m1 ? "-15px" : "-70px",
+              }}
+            >
+              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                Pdfs
+              </p>
+            </div>
+            <Swiper
+              direction={"horizontal"}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+                reverseDirection: true,
+              }}
+              breakpoints={{
+                300: {
+                  slidesPerView: 2,
+                  spaceBetween: 1,
+                },
+
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 20,
+                },
+              }}
+              pagination={{ clickable: true }}
+              style={{
+                height: "300px",
+              }}
+            >
+              {products &&
+                products.map((card, index) => {
+                  if (card.category == "Pdf")
+                    return (
+                      <SwiperSlide
+                        key={index + card.category}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {m1 ? (
+                          <CardUI
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        ) : (
+                          <CardUI2
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        )}
+                      </SwiperSlide>
+                    );
+                })}
+            </Swiper>
+          </div>
+        </div>
+        <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
+          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: m1 ? "-15px" : "-70px",
+              }}
+            >
+              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                Codes
+              </p>
+            </div>
+            <Swiper
+              direction={"horizontal"}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+                reverseDirection: false,
+              }}
+              breakpoints={{
+                300: {
+                  slidesPerView: 2,
+                  spaceBetween: 1,
+                },
+
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 20,
+                },
+              }}
+              pagination={{ clickable: true }}
+              style={{
+                height: "300px",
+              }}
+            >
+              {products &&
+                products.map((card, index) => {
+                  if (card.category == "Code")
+                    return (
+                      <SwiperSlide
+                        key={index + card.category}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {m1 ? (
+                          <CardUI
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        ) : (
+                          <CardUI2
+                            image={card.image}
+                            data={{
+                              image: card.image,
+                              name: card.name,
+                              price: card.price,
+                              brand: card.brand,
+                              category: card.category,
+                              route: card.route,
+                            }}
+                          />
+                        )}
+                      </SwiperSlide>
+                    );
+                })}
+            </Swiper>
+          </div>
         </div>
       </main>
+      {m1 ? (
+        <div>
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
+      ) : null}
     </ThemeProvider>
   );
 }
