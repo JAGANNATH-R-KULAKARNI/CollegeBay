@@ -223,7 +223,11 @@ export default function Album(props) {
       <div>
         <br />
         <br />
-        <h2 style={{ textAlign: "center" }}>Search Results...</h2>
+        <h2 style={{ textAlign: "center" }}>
+          {filteredProducts.length > 0
+            ? "Search Results..."
+            : "No Such Products Found"}
+        </h2>
         <SearchResults
           products={filteredProducts}
           addToCartHandler={addToCartHandler}

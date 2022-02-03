@@ -19,12 +19,12 @@ import CardUI from "./Card";
 import CardUI2 from "./Card2";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as c from "../../utils/Colors";
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { useSelector } from "react-redux";
 
 const theme = createTheme();
 
 export default function Results(props) {
+  const text = useSelector((state) => state.SearchText);
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
   const m3 = useMediaQuery("(min-width:1000px)");
@@ -84,6 +84,21 @@ export default function Results(props) {
             </Grid>
           </Container>
         </div>
+        {props.products && text.length > 0 && props.products.length == 0 ? (
+          <div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <img
+                src={
+                  false
+                    ? "https://media.giphy.com/media/2tRBdHz4Wwhyw/giphy.gif"
+                    : "https://media.giphy.com/media/OiC5BKaPVLl60/giphy.gif"
+                }
+                width={m1 ? "700px" : "300px"}
+                height="auto"
+              />
+            </div>
+          </div>
+        ) : null}
         <br />
         <br />
         {m1 ? (

@@ -11,7 +11,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import * as Colors from "../../utils/Colors";
+import * as c from "../../utils/Colors";
 import Link from "next/link";
 
 export default function MediaControlCard({ data, deleteCartItem }) {
@@ -37,7 +37,7 @@ export default function MediaControlCard({ data, deleteCartItem }) {
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
             <Link href={`/product/${data.route}`}>
-              <a style={{ color: Colors.Purple }}> {data && data.name}</a>
+              <a style={{ color: c.c1 }}> {data && data.name}</a>
             </Link>
           </Typography>
           <Typography
@@ -52,7 +52,7 @@ export default function MediaControlCard({ data, deleteCartItem }) {
           <Button
             size="small"
             variant="outlined"
-            style={{ backgroundColor: Colors.Yellow, color: "white" }}
+            style={{ backgroundColor: c.c1, color: "white" }}
             onClick={() => deleteCartItem(data.route)}
           >
             Remove From Cart
