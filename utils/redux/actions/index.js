@@ -25,3 +25,10 @@ export const updateCart = (cart) => {
     payload: value,
   };
 };
+
+export const searchText = (text) => {
+  return {
+    type: "SEARCH_TEXT",
+    payload: text,
+  };
+};

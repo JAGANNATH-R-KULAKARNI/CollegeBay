@@ -20,16 +20,18 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
-
 import Image from "next/image";
 import axios from "axios";
 import BadgeUI from "./Badge";
+import SearchBarUI from "./SearchBar";
+import { searchText } from "../utils/redux/actions";
+import { useDispatch } from "react-redux";
 
 function NavBarForAuth() {
   const router = useRouter();
 
   const [click, setclick] = useState(false);
-
+  const dispatch = useDispatch();
   const handleClick = () => setclick(!click);
   const closeMenu = () => setclick(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -88,11 +90,15 @@ function NavBarForAuth() {
             <p
               style={{ fontSize: m1 ? "40px" : "20px", fontWeight: 900 }}
               className={styles.logo}
-              onClick={() => router.push("/")}
+              onClick={() => {
+                if (router.pathname == "/") {
+                  dispatch(searchText(""));
+                }
+                router.push("/");
+              }}
             >
               Collegebay
             </p>
-
             <p
               style={{
                 fontSize: m1 ? "20px" : "15px",
@@ -185,6 +191,18 @@ function NavBarForAuth() {
               </Menu>
             </p>
           </div>
+
+          {router.pathname == "/" ? (
+            <div
+              style={{
+                marginTop: m1 ? "-185px" : "-25px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <SearchBarUI />
+            </div>
+          ) : null}
         </Paper>
       </AppBar>
     </div>

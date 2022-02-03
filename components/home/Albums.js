@@ -33,6 +33,7 @@ import "swiper/components/pagination/pagination.min.css";
 import SwiperCore, { Pagination } from "swiper/core";
 import { Autoplay } from "swiper";
 import SCom from "./StartingComponent";
+import SearchResults from "./SearchResults";
 
 SwiperCore.use([Autoplay]);
 const theme = createTheme();
@@ -40,7 +41,10 @@ const theme = createTheme();
 export default function Album(props) {
   const router = useRouter();
   const myState = useSelector((state) => state.changeCartLen);
+  const text = useSelector((state) => state.SearchText);
   const [products, setProducts] = React.useState(null);
+  const [filteredProducts, setFilteredProducts] = React.useState([]);
+
   const dispatch = useDispatch();
 
   const m1 = useMediaQuery("(min-width:430px)");
@@ -73,7 +77,7 @@ export default function Album(props) {
   };
   async function sortItOut2(cart) {
     if (!cart) return;
-    console.log("here");
+
     const hash = {};
 
     cart &&
@@ -96,7 +100,8 @@ export default function Album(props) {
           };
         }
       });
-
+    console.log("products 2");
+    console.log(products);
     setProducts(products);
   }
   async function sortItOut(cart) {
@@ -125,6 +130,8 @@ export default function Album(props) {
       });
 
     setProducts(products);
+    console.log("products 1");
+    console.log(products);
   }
 
   async function getCart() {
@@ -151,19 +158,88 @@ export default function Album(props) {
     getCart();
   }, []);
 
+  const editDistance = (s, t) => {
+    if (!s.length) return t.length;
+    if (!t.length) return s.length;
+    const arr = [];
+    for (let i = 0; i <= t.length; i++) {
+      arr[i] = [i];
+      for (let j = 1; j <= s.length; j++) {
+        arr[i][j] =
+          i === 0
+            ? j
+            : Math.min(
+                arr[i - 1][j] + 1,
+                arr[i][j - 1] + 1,
+                arr[i - 1][j - 1] + (s[j - 1] === t[i - 1] ? 0 : 1)
+              );
+      }
+    }
+    return arr[t.length][s.length];
+  };
+
+  function similarity(s1, s2) {
+    var longer = s1;
+    var shorter = s2;
+    if (s1.length < s2.length) {
+      longer = s2;
+      shorter = s1;
+    }
+    var longerLength = longer.length;
+
+    return (longerLength - editDistance(longer, shorter)) / longerLength;
+  }
+
+  React.useEffect(() => {
+    console.log("in serach results");
+    console.log(products);
+    const data = [];
+    let temp;
+
+    products &&
+      products.map((item) => {
+        if (
+          similarity(
+            text.toLowerCase(),
+            item["brand"].substring(0, text.length).toLowerCase()
+          ) >= 0.35 ||
+          similarity(
+            text.toLowerCase(),
+            item["category"].substring(0, text.length).toLowerCase()
+          ) >= 0.35 ||
+          similarity(
+            text.toLowerCase(),
+            item["name"].substring(0, text.length).toLowerCase()
+          ) >= 0.35
+        )
+          data.push(item);
+      });
+
+    setFilteredProducts(data);
+  }, [text, products]);
+
+  if (text.length > 0) {
+    return (
+      <div>
+        <br />
+        <br />
+        <h2 style={{ textAlign: "center" }}>Search Results...</h2>
+        <SearchResults
+          products={filteredProducts}
+          addToCartHandler={addToCartHandler}
+        />
+      </div>
+    );
+  }
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <br />
-      <div style={{ marginTop: m1 ? "0px" : "-50px" }} id="booksya">
+      <div style={{ marginTop: m1 ? "0px" : "-30px" }} id="booksya">
         <SCom />
       </div>
       <main style={{ marginTop: m1 ? "0px" : "-100px" }}>
         <div>
-          {/* <div id="booksya"></div>
-          <br />
-          <br /> */}
-
           <div
             style={{
               paddingLeft: "5%",
@@ -237,7 +313,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         ) : (
                           <CardUI2
@@ -249,7 +328,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         )}
                       </SwiperSlide>
@@ -328,7 +410,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         ) : (
                           <CardUI2
@@ -340,7 +425,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         )}
                       </SwiperSlide>
@@ -417,7 +505,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         ) : (
                           <CardUI2
@@ -429,7 +520,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         )}
                       </SwiperSlide>
@@ -506,7 +600,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         ) : (
                           <CardUI2
@@ -518,7 +615,10 @@ export default function Album(props) {
                               brand: card.brand,
                               category: card.category,
                               route: card.route,
+                              email: card.email,
+                              status: card.presentInCart,
                             }}
+                            addToCartHandler={addToCartHandler}
                           />
                         )}
                       </SwiperSlide>

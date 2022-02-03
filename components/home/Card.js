@@ -18,6 +18,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ButtonUI from "./Button";
 import * as c from "../../utils/Colors";
 import { useRouter } from "next/router";
+import Chip from "@mui/material/Chip";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -80,17 +81,27 @@ export default function ReviewCard(props) {
         </div>
       </CardContent>
 
-      <ButtonUI
-        text="Add to cart"
-        width="50%"
-        color={c.c1}
-        status={true}
-        size="10px"
-        handler={null}
-      />
+      {!props.data.status ? (
+        <ButtonUI
+          text="Add to cart"
+          width="50%"
+          color={c.c1}
+          status={true}
+          size="10px"
+          handler={() =>
+            props.addToCartHandler(props.data.route, props.data.email)
+          }
+        />
+      ) : (
+        <Chip
+          label="Added To Cart"
+          onClick={() => viewProduct(props.data.route)}
+          style={{ width: "40%", backgroundColor: c.c1, color: c.c2 }}
+        />
+      )}
       <ButtonUI
         text="View Product"
-        width="50%"
+        width={props.data.status ? "60%" : "50%"}
         color={c.c1}
         status={false}
         size="10px"

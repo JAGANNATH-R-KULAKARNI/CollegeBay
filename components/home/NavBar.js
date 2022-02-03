@@ -182,8 +182,8 @@ function Navbar() {
                 Sell
               </Button>
             </li>
-          </ul> */}
-          {/*
+          </ul> 
+     
           <ul>
             {bg1 ? null : (
               <li>
