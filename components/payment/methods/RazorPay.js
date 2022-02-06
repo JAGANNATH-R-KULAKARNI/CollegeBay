@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
 import * as Colors from "../../../utils/Colors";
+import ButtonUI from "./Button";
 
 function RazorPay(props) {
   const theme = createTheme();
@@ -131,7 +132,7 @@ function RazorPay(props) {
           address: "Collegebay Private Limited",
         },
         theme: {
-          color: Colors.Yellow,
+          color: Colors.c1,
         },
       };
 
@@ -146,15 +147,7 @@ function RazorPay(props) {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <Button
-          onClick={displayTheRazorPay}
-          style={{
-            backgroundColor: "#FFCC00",
-            width: matches ? "250px" : "150px",
-          }}
-        >
-          Pay ₹{props.amount}
-        </Button>
+        <ButtonUI text={`Pay ₹${props.amount}`} clicked={displayTheRazorPay} />
       </ThemeProvider>
     </div>
   );

@@ -96,7 +96,12 @@ export default function ReviewCard(props) {
         <Chip
           label="Added To Cart"
           onClick={() => viewProduct(props.data.route)}
-          style={{ width: "40%", backgroundColor: c.c1, color: c.c2 }}
+          style={{
+            width: "40%",
+            color: c.c1,
+            backgroundColor: c.c2,
+            border: "1px solid",
+          }}
         />
       )}
       <ButtonUI

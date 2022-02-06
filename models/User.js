@@ -103,6 +103,7 @@ const userSchema = new mongoose.Schema(
         country: { type: String },
         state: { type: String },
         pincode: { type: String },
+        status: { type: String },
       },
     ],
     keyId: { type: String },

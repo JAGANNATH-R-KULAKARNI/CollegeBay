@@ -10,9 +10,11 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CardUI2 from "./Card2";
-import * as c from "../../utils/Colors";
+import * as c from "../../../utils/Colors";
+import Paper from "@mui/material/Paper";
+
 const theme = createTheme();
-function Product({ data, deleteCartItem }) {
+function Product({ data }) {
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
   const m3 = useMediaQuery("(min-width:1000px)");
@@ -25,12 +27,19 @@ function Product({ data, deleteCartItem }) {
         <CssBaseline />
         <br />
         <main>
-          <div
+          <Paper
             style={{
               display: "flex",
               justifyContent: "center",
               marginLeft: "0px",
+              width: "100%",
+              height: data.length > 2 ? "230px" : "174px",
+              overflow: "scroll",
+              padding: "15px",
+
+              //   border: `10px solid ${c.c1}`,
             }}
+            elevation={0}
           >
             <Container sx={{ py: 0 }} maxWidth="md">
               <Grid container spacing={m1 ? 30 : 4}>
@@ -39,30 +48,14 @@ function Product({ data, deleteCartItem }) {
                     if (card && card.route) {
                       return (
                         <Grid item key={card} xs={6} sm={6} md={0}>
-                          <CardUI2
-                            data={card}
-                            deleteCartItem={deleteCartItem}
-                          />
+                          <CardUI2 data={card} />
                         </Grid>
                       );
                     }
                   })}
               </Grid>
-
-              {data && data.length == 0 ? (
-                <div>
-                  <br />
-                  <br />
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <img
-                      style={{ width: "90%", height: "auto" }}
-                      src="https://shop.myfelt-europe.com/skin/frontend/rwd/myfelt-2018/images/cart-noitem-mobile.gif"
-                    />
-                  </div>
-                </div>
-              ) : null}
             </Container>
-          </div>
+          </Paper>
           <br />
           <br />
         </main>
@@ -76,26 +69,21 @@ function Product({ data, deleteCartItem }) {
       <div
         style={{
           width: "100%",
-          height: data && data.length == 0 ? "100%" : "570px",
+          height: data.length > 1 ? "390px" : "200px",
           overflow: "auto",
           paddingLeft: "10%",
           justifyContent: "center",
         }}
       >
         {data && data.length == 0 ? (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <img
-              style={{ width: "800px", height: "auto" }}
-              src="https://shop.myfelt-europe.com/skin/frontend/rwd/myfelt-2018/images/cart-noitem-mobile.gif"
-            />
-          </div>
+          <h1>No Items In The Cart</h1>
         ) : (
           data &&
           data.map((item) => {
             if (item && item.route) {
               return (
                 <div key={item.route}>
-                  <CardUI data={item} deleteCartItem={deleteCartItem} />
+                  <CardUI data={item} />
                   <br />
                 </div>
               );

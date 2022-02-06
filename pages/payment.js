@@ -22,6 +22,8 @@ export default function Payment() {
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [amountUSD, setAmountUSD] = React.useState(0);
   const [cart, setCart] = React.useState(null);
+  const [orderId, setOrderId] = React.useState(null);
+
   const cartLen = useSelector((state) => state.changeCartLen);
 
   const router = useRouter();
@@ -75,6 +77,62 @@ export default function Payment() {
     }
   }
 
+  async function cashOnDelivery(details, amount) {
+    const invoice = {
+      ...details,
+      address: details.address1,
+      amountPaid: amount,
+      cart: cart,
+    };
+
+    delete invoice.address1;
+    console.log(invoice);
+
+    try {
+      await axios
+        .post("/api/payment/getids", {
+          token: sessionStorage.getItem("collegeBay"),
+        })
+        .then(async (u) => {
+          const d = new Date();
+
+          invoice = {
+            ...invoice,
+            orderId: u["data"].order,
+            receipt: u["data"].receipt,
+            paidOn: d.toString(),
+            email: u["data"].email,
+            paymentId: "dummy",
+          };
+          setOrderId(invoice.orderId);
+          console.log("Invoice");
+          console.log(invoice);
+
+          try {
+            await axios
+              .post("/api/orders/seed", {
+                token: sessionStorage.getItem("collegeBay"),
+                invoice: invoice,
+                status: "Not Paid",
+              })
+              .then(async (u) => {
+                console.log(u);
+                await deleteCartItem();
+              })
+              .catch((err) => {
+                console.log(err.response.message);
+              });
+          } catch (err) {
+            console.log(err.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err.response.message);
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
   async function razorPayPaymentSuccessful(invoice) {
     try {
       invoice = {
@@ -82,10 +140,13 @@ export default function Payment() {
         cart: cart,
       };
 
+      console.log(invoice);
+      setOrderId(invoice.orderId);
       await axios
         .post("/api/orders/seed", {
           token: sessionStorage.getItem("collegeBay"),
           invoice: invoice,
+          status: "Paid",
         })
         .then(async (u) => {
           console.log(u);
@@ -128,6 +189,9 @@ export default function Payment() {
       <CheckoutUI
         totalAmount={totalAmount}
         razorPayPaymentSuccessful={razorPayPaymentSuccessful}
+        cashOnDelivery={cashOnDelivery}
+        cart={cart}
+        orderId={orderId}
       />
     </div>
   );

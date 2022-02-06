@@ -18,9 +18,6 @@ handler.post(async (req, res) => {
 
     invoice.cart.map(async (item) => {
       let seller = await User.find({ email: item.email });
-      console.log(
-        "its seller damn it///////////////////////////////////////////////////////////////////////////"
-      );
 
       console.log(seller[0]._id.toString());
       console.log(seller);

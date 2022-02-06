@@ -15,10 +15,11 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import ButtonUI from "./Button";
-import * as c from "../../utils/Colors";
+// import ButtonUI from "../../home/Button";
+import * as c from "../../../utils/Colors";
 import { useRouter } from "next/router";
 import Chip from "@mui/material/Chip";
+import Link from "next/link";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -31,7 +32,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function ReviewCard(props) {
+export default function CardForMobile({ data, deleteCartItem }) {
   const router = useRouter();
   const m1 = useMediaQuery("(min-width:430px)");
   const m2 = useMediaQuery("(min-width:700px)");
@@ -58,7 +59,7 @@ export default function ReviewCard(props) {
       <CardMedia
         component="img"
         height="95"
-        image={props.image}
+        image={data.image}
         alt="Paella dish"
         style={{ maxHeight: 95 }}
       />
@@ -68,51 +69,30 @@ export default function ReviewCard(props) {
           color="text.secondary"
           style={{ fontSize: "10px", fontWeight: "bolder", marginTop: "-10px" }}
         >
-          {props.data.name}
+          {/* <Link href={`/product/${data.route}`} target="_blank">
+            <a style={{ color: c.c1 }}> {data && data.name}</a>
+          </Link> */}
+          {data && data.name}
         </Typography>
         <Typography
           variant="body1"
           color="text.secondary"
           style={{ fontSize: "10px" }}
         >
-          ₹ {props.data.price}
+          ₹ {data && data.price}
         </Typography>
       </CardContent>
-      <div style={{ marginTop: "-13px" }}>
-        {!props.data.status ? (
-          <ButtonUI
-            text="Add to cart"
-            width="100%"
-            color={c.c1}
-            status={true}
-            size="10px"
-            handler={() =>
-              props.addToCartHandler(props.data.route, props.data.email)
-            }
-          />
-        ) : (
-          <Chip
-            label="Added To Cart"
-            onClick={() => viewProduct(props.data.route)}
-            style={{
-              width: "100%",
-              color: c.c1,
-              backgroundColor: c.c2,
-              borderColor: c.c1,
-              border: "1px solid",
-            }}
-          />
-        )}
+      {/* <div style={{ marginTop: "-13px" }}>
         <ButtonUI
-          text="View Product"
+          text="Remove From Cart"
           width="100%"
           color={c.c1}
-          status={false}
+          status={true}
           size="9px"
-          handler={viewProduct}
-          data={props.data.route}
+          handler={deleteCartItem}
+          data={data.route}
         />
-      </div>
+      </div> */}
     </Card>
   );
 }

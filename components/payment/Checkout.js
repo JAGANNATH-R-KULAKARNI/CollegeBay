@@ -17,8 +17,10 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import PayPalUI from "./methods/PayPal";
 import RazorPayUI from "./methods/RazorPay";
+import * as c from "../../utils/Colors";
+import ButtonUI from "./methods/Button";
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["Address", "Payment", "Review"];
 
 const theme = createTheme();
 
@@ -63,7 +65,13 @@ export default function Checkout(props) {
           />
         );
       case 2:
-        return <Review totalAmount={props.totalAmount} />;
+        return (
+          <Review
+            totalAmount={props.totalAmount}
+            cart={props.cart}
+            paymentType={paymentType}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }
@@ -109,8 +117,15 @@ export default function Checkout(props) {
   };
 
   const orderSuccessful = (invoice) => {
-    setActiveStep(activeStep + 1);
-    props.razorPayPaymentSuccessful(invoice);
+    if (paymentType == 0) props.razorPayPaymentSuccessful(invoice);
+    else props.cashOnDelivery(getUserDetails(), props.totalAmount);
+
+    setTimeout(
+      () => {
+        setActiveStep(activeStep + 1);
+      },
+      paymentType == 0 ? 0 : 2000
+    );
   };
   const PAYMENT_BUTTON =
     paymentType == 0 ? (
@@ -120,7 +135,7 @@ export default function Checkout(props) {
         razorPayPaymentSuccessful={orderSuccessful}
       />
     ) : (
-      <h2>Cash On Delivery</h2>
+      <ButtonUI text="Place Order" clicked={orderSuccessful} size="15px" />
     );
   return (
     <ThemeProvider theme={theme}>
@@ -148,32 +163,63 @@ export default function Checkout(props) {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  We have received your Order
+                  {paymentType == 0 ? " and Payment" : null}
+                  .<br />{" "}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      fontWeight: 900,
+                    }}
+                  >
+                    order Id : {props.orderId}
+                  </div>
+                  {paymentType != 0 ? "You have not paid yet." : null} We have
+                  emailed your order confirmation.
                 </Typography>
               </React.Fragment>
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                  {activeStep !== 0 && activeStep != steps.length - 1 && (
+                    <Button
+                      onClick={handleBack}
+                      sx={{ mt: 3, ml: 1, backgroundColor: c.c2, color: c.c1 }}
+                    >
                       Back
                     </Button>
                   )}
-                  {activeStep === steps.length - 1 ? (
-                    PAYMENT_BUTTON
-                  ) : (
+                  {activeStep === steps.length - 1 ? null : ( // PAYMENT_BUTTON
                     <Button
                       variant="contained"
                       onClick={handleNext}
-                      sx={{ mt: 3, ml: 1 }}
+                      sx={{ mt: 3, ml: 1, backgroundColor: c.c1, color: c.c2 }}
                     >
                       Next
                     </Button>
                   )}
                 </Box>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "20px",
+                  }}
+                >
+                  {activeStep === steps.length - 1 && PAYMENT_BUTTON}
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {activeStep === steps.length - 1 && (
+                    <Button
+                      onClick={handleBack}
+                      sx={{ mt: 3, ml: 1, backgroundColor: c.c2, color: c.c1 }}
+                    >
+                      Back
+                    </Button>
+                  )}
+                </div>
               </React.Fragment>
             )}
           </React.Fragment>
