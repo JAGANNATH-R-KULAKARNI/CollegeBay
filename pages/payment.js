@@ -113,7 +113,7 @@ export default function Payment() {
               .post("/api/orders/seed", {
                 token: sessionStorage.getItem("collegeBay"),
                 invoice: invoice,
-                status: "Not Paid",
+                status: 0,
               })
               .then(async (u) => {
                 console.log(u);
@@ -146,7 +146,7 @@ export default function Payment() {
         .post("/api/orders/seed", {
           token: sessionStorage.getItem("collegeBay"),
           invoice: invoice,
-          status: "Paid",
+          status: 1,
         })
         .then(async (u) => {
           console.log(u);

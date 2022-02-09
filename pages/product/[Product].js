@@ -7,8 +7,7 @@ import Product from "../../models/Product";
 
 function ProductUIC({ data }) {
   const router = useRouter();
-  //const data = props.router.query;
-  // const { product } = props;
+
   if (!data.name) {
     return (
       <div style={{ paddingLeft: "10%", paddingRight: "10%" }}>
@@ -34,9 +33,8 @@ export async function getServerSideProps(context) {
 
   //The lean option tells Mongoose to skip hydrating the result documents. This makes queries faster and less memory intensive, but the result documents are plain old JavaScript objects (POJOs), not Mongoose documents.
   await db.disconnect();
-  // console.log("heyyyyyyyyyy");
-  // console.log(params);
-  // console.log(product);
+  console.log("product");
+  console.log(product);
   return {
     props: {
       data: db.convertDocToObj(product),

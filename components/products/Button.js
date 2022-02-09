@@ -1,4 +1,4 @@
-import classes from "../../../styles/Button.module.css";
+import classes from "../../styles/Button.module.css";
 
 function AButton(props) {
   return (
@@ -12,6 +12,9 @@ function AButton(props) {
         onClick={props.clicked ? props.clicked : null}
         style={{
           fontSize: props.size ? props.size : "16px",
+          minWidth: props.mindis ? props.mindis : "0px",
+          top: props.present ? "2px" : "0px",
+          boxShadow: props.present ? "0 4px #583e81" : "0 6px black",
         }}
       >
         {props.text ? props.text : null}
