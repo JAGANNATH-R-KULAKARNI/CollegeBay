@@ -148,7 +148,7 @@ function NavBarForAuth() {
                 height: m1 ? "30px" : "25px",
               }}
             >
-              <Tooltip title="Open settings">
+              <Tooltip title="Go To...">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt="Remy Sharp"
@@ -173,13 +173,13 @@ function NavBarForAuth() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseNavMenu}>
+                {/* <MenuItem onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Account</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
+                </MenuItem> */}
+                <MenuItem onClick={() => router.push("/dashboard")}>
                   <Typography textAlign="center">Dashboard</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => router.push("/myorders")}>

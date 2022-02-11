@@ -38,18 +38,7 @@ export default function AddressForm(props) {
             onChange={(e) => props.setPhnum(e.target.value)}
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address1"
-            name="address1"
-            value={props.address2}
-            label="Address line"
-            fullWidth
-            autoComplete="shipping address-line1"
-            variant="standard"
-            onChange={(e) => props.setAddress1(e.target.value)}
-          />
-        </Grid>
+
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -98,6 +87,18 @@ export default function AddressForm(props) {
             autoComplete="shipping country"
             variant="standard"
             onChange={(e) => props.setCountry(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="address1"
+            name="address1"
+            value={props.address2}
+            label="Address of your Classroom"
+            fullWidth
+            autoComplete="shipping address-line1"
+            variant="standard"
+            onChange={(e) => props.setAddress1(e.target.value)}
           />
         </Grid>
       </Grid>

@@ -2,6 +2,8 @@ import nc from "next-connect";
 import db from "../../../utils/Db";
 import User from "../../../models/User";
 import jwt from "jsonwebtoken";
+import * as c from "../../../utils/Colors";
+
 const mail = require("@sendgrid/mail");
 mail.setApiKey(process.env.SENDGRID_API);
 
@@ -21,9 +23,8 @@ handler.post(async (req, res) => {
     invoice.cart.map(async (item) => {
       let seller = await User.find({ email: item.email });
 
-      console.log(seller[0]._id.toString());
-      console.log(seller);
       let soldItems = seller[0].soldItems;
+      let prdcts = seller[0].products;
 
       soldItems.push({
         ...invoice,
@@ -55,17 +56,18 @@ handler.post(async (req, res) => {
      ? `Remaining amount to be paid is ₹ ${item.price}\r\n\n\n`
      : ""
  }
- Person's Contact number is  ${invoice.phnum}\r\n\n\n
- Person's Email is  ${invoice.email}\r\n\n\n
-
+ Person's Contact number is : "${invoice.phnum}"\r\n\n\n
+ Person's Email is : "${invoice.email}"\r\n\n\n
+ Person's Address is : "${invoice.address}"\r\n\n\n
          HAVE FUN ! \r\n\r\n\r\n
        
+        -CollegeBay(upcoming trillion dollor company)\r\n 
         App Creater - Jagannath R Kulakarni\r\n
         Follow me on www.linkedin.com/in/jagannath-r-kulakarni-a465841a7 (LinkedIn)
   `;
 
       const message2 = `
-  Hello "${payload.name}",\r\n\n
+      Hello "${payload.name}",\r\n\n
   You purchased "${item.name}" ${
         req.body.status
           ? ` for ₹ ${item.price}`
@@ -77,10 +79,13 @@ handler.post(async (req, res) => {
      : ""
  }
  
- Seller's Email is  ${item.email}\r\n\n\n
+ Seller's Email is :  "${item.email}"\r\n\n\n
+ Seller's Phone Number is : "${prdcts[0].phnum}"\r\n\n\n
+ Seller's Address is : "${prdcts[0].address}"\r\n\n\n
 
          HAVE FUN ! \r\n\r\n\r\n
        
+        -CollegeBay(upcoming trillion dollor company)\r\n
         App Creater - Jagannath R Kulakarni\r\n
         Follow me on www.linkedin.com/in/jagannath-r-kulakarni-a465841a7 (LinkedIn)
   `;

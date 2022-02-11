@@ -81,7 +81,7 @@ function Footer() {
                 }}
               >
                 {" "}
-                {"Let's get to know"}
+                {"My Details"}
               </h3>
               <li className={styles.footer}>
                 <a

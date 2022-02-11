@@ -34,6 +34,7 @@ import SwiperCore, { Pagination } from "swiper/core";
 import { Autoplay } from "swiper";
 import SCom from "./StartingComponent";
 import SearchResults from "./SearchResults";
+import Bg from "../../public/assets/images/bg.png";
 
 SwiperCore.use([Autoplay]);
 const theme = createTheme();
@@ -237,509 +238,511 @@ export default function Album(props) {
   }
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <br />
-      <div style={{ marginTop: m1 ? "0px" : "-30px" }} id="booksya">
-        <SCom />
+      <div>
+        <CssBaseline />
+        <br />
+        <div style={{ marginTop: m1 ? "0px" : "-30px" }} id="booksya">
+          <SCom />
+        </div>
+        <main style={{ marginTop: m1 ? "0px" : "-100px" }}>
+          <div>
+            <div
+              style={{
+                paddingLeft: "5%",
+                paddingRight: "5%",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: m1 ? "-15px" : "-70px",
+                }}
+              >
+                <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                  Books & Notes
+                </p>
+              </div>
+              <div id="instrumentsya"></div>
+              <Swiper
+                direction={"horizontal"}
+                slidesPerView={1}
+                loop={true}
+                autoplay={{
+                  delay: 2000,
+                  disableOnInteraction: false,
+                  reverseDirection: true,
+                }}
+                breakpoints={{
+                  300: {
+                    slidesPerView: 2,
+                    spaceBetween: 1,
+                  },
+
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                  },
+                  1400: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
+                }}
+                pagination={{ clickable: true }}
+                style={{
+                  height: "300px",
+                }}
+              >
+                {products &&
+                  products.map((card, index) => {
+                    if (card.category == "Book")
+                      return (
+                        <SwiperSlide
+                          key={index + card.category}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {m1 ? (
+                            <CardUI
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          ) : (
+                            <CardUI2
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          )}
+                        </SwiperSlide>
+                      );
+                  })}
+              </Swiper>
+            </div>
+          </div>
+
+          <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
+            <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: m1 ? "-15px" : "-70px",
+                }}
+              >
+                <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                  Instruments
+                </p>
+              </div>
+              <div id="pdfsya"></div>
+              <Swiper
+                direction={"horizontal"}
+                slidesPerView={1}
+                loop={true}
+                autoplay={{
+                  delay: 2000,
+                  disableOnInteraction: false,
+                  reverseDirection: false,
+                }}
+                breakpoints={{
+                  300: {
+                    slidesPerView: 2,
+                    spaceBetween: 1,
+                  },
+
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                  },
+                  1400: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
+                }}
+                pagination={{ clickable: true }}
+                style={{
+                  height: "300px",
+                }}
+              >
+                {products &&
+                  products.map((card, index) => {
+                    if (card.category == "Instrument")
+                      return (
+                        <SwiperSlide
+                          key={index + card.category}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {m1 ? (
+                            <CardUI
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          ) : (
+                            <CardUI2
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          )}
+                        </SwiperSlide>
+                      );
+                  })}
+              </Swiper>
+            </div>
+          </div>
+          <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
+            <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: m1 ? "-15px" : "-70px",
+                }}
+              >
+                <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                  Pdfs
+                </p>
+              </div>
+              <Swiper
+                direction={"horizontal"}
+                slidesPerView={1}
+                loop={true}
+                autoplay={{
+                  delay: 2000,
+                  disableOnInteraction: false,
+                  reverseDirection: true,
+                }}
+                breakpoints={{
+                  300: {
+                    slidesPerView: 2,
+                    spaceBetween: 1,
+                  },
+
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                  },
+                  1400: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
+                }}
+                pagination={{ clickable: true }}
+                style={{
+                  height: "300px",
+                }}
+              >
+                {products &&
+                  products.map((card, index) => {
+                    if (card.category == "Pdf")
+                      return (
+                        <SwiperSlide
+                          key={index + card.category}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {m1 ? (
+                            <CardUI
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          ) : (
+                            <CardUI2
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          )}
+                        </SwiperSlide>
+                      );
+                  })}
+              </Swiper>
+            </div>
+          </div>
+          <div style={{ marginTop: m1 ? "0px" : "-60px" }} id="codeya">
+            <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: m1 ? "-15px" : "-70px",
+                }}
+              >
+                <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                  Codes
+                </p>
+              </div>
+              <Swiper
+                direction={"horizontal"}
+                slidesPerView={1}
+                loop={true}
+                autoplay={{
+                  delay: 2000,
+                  disableOnInteraction: false,
+                  reverseDirection: false,
+                }}
+                breakpoints={{
+                  300: {
+                    slidesPerView: 2,
+                    spaceBetween: 1,
+                  },
+
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                  },
+                  1400: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
+                }}
+                pagination={{ clickable: true }}
+                style={{
+                  height: "300px",
+                }}
+              >
+                {products &&
+                  products.map((card, index) => {
+                    if (card.category == "Code")
+                      return (
+                        <SwiperSlide
+                          key={index + card.category}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {m1 ? (
+                            <CardUI
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          ) : (
+                            <CardUI2
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          )}
+                        </SwiperSlide>
+                      );
+                  })}
+              </Swiper>
+            </div>
+          </div>
+          <div style={{ marginTop: m1 ? "0px" : "-60px" }} id="othersya">
+            <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: m1 ? "-15px" : "-70px",
+                }}
+              >
+                <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
+                  Others
+                </p>
+              </div>
+              <Swiper
+                direction={"horizontal"}
+                slidesPerView={1}
+                loop={true}
+                autoplay={{
+                  delay: 2000,
+                  disableOnInteraction: false,
+                  reverseDirection: true,
+                }}
+                breakpoints={{
+                  300: {
+                    slidesPerView: 2,
+                    spaceBetween: 1,
+                  },
+
+                  768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                  },
+                  1400: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
+                }}
+                pagination={{ clickable: true }}
+                style={{
+                  height: "300px",
+                }}
+              >
+                {products &&
+                  products.map((card, index) => {
+                    if (
+                      card.category != "Code" &&
+                      card.category != "Instrument" &&
+                      card.category != "Book" &&
+                      card.category != "Pdf"
+                    )
+                      return (
+                        <SwiperSlide
+                          key={index + card.category}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {m1 ? (
+                            <CardUI
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          ) : (
+                            <CardUI2
+                              image={card.image}
+                              data={{
+                                image: card.image,
+                                name: card.name,
+                                price: card.price,
+                                brand: card.brand,
+                                category: card.category,
+                                route: card.route,
+                                email: card.email,
+                                status: card.presentInCart,
+                              }}
+                              addToCartHandler={addToCartHandler}
+                            />
+                          )}
+                        </SwiperSlide>
+                      );
+                  })}
+              </Swiper>
+            </div>
+          </div>
+        </main>
+        {m1 ? (
+          <div>
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+        ) : null}
       </div>
-      <main style={{ marginTop: m1 ? "0px" : "-100px" }}>
-        <div>
-          <div
-            style={{
-              paddingLeft: "5%",
-              paddingRight: "5%",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: m1 ? "-15px" : "-70px",
-              }}
-            >
-              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
-                Books & Notes
-              </p>
-            </div>
-            <div id="instrumentsya"></div>
-            <Swiper
-              direction={"horizontal"}
-              slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-                reverseDirection: true,
-              }}
-              breakpoints={{
-                300: {
-                  slidesPerView: 2,
-                  spaceBetween: 1,
-                },
-
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-                1400: {
-                  slidesPerView: 5,
-                  spaceBetween: 20,
-                },
-              }}
-              pagination={{ clickable: true }}
-              style={{
-                height: "300px",
-              }}
-            >
-              {products &&
-                products.map((card, index) => {
-                  if (card.category == "Book")
-                    return (
-                      <SwiperSlide
-                        key={index + card.category}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {m1 ? (
-                          <CardUI
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        ) : (
-                          <CardUI2
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        )}
-                      </SwiperSlide>
-                    );
-                })}
-            </Swiper>
-          </div>
-        </div>
-
-        <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
-          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: m1 ? "-15px" : "-70px",
-              }}
-            >
-              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
-                Instruments
-              </p>
-            </div>
-            <div id="pdfsya"></div>
-            <Swiper
-              direction={"horizontal"}
-              slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-                reverseDirection: false,
-              }}
-              breakpoints={{
-                300: {
-                  slidesPerView: 2,
-                  spaceBetween: 1,
-                },
-
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-                1400: {
-                  slidesPerView: 5,
-                  spaceBetween: 20,
-                },
-              }}
-              pagination={{ clickable: true }}
-              style={{
-                height: "300px",
-              }}
-            >
-              {products &&
-                products.map((card, index) => {
-                  if (card.category == "Instrument")
-                    return (
-                      <SwiperSlide
-                        key={index + card.category}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {m1 ? (
-                          <CardUI
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        ) : (
-                          <CardUI2
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        )}
-                      </SwiperSlide>
-                    );
-                })}
-            </Swiper>
-          </div>
-        </div>
-        <div style={{ marginTop: m1 ? "0px" : "-60px" }}>
-          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: m1 ? "-15px" : "-70px",
-              }}
-            >
-              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
-                Pdfs
-              </p>
-            </div>
-            <Swiper
-              direction={"horizontal"}
-              slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-                reverseDirection: true,
-              }}
-              breakpoints={{
-                300: {
-                  slidesPerView: 2,
-                  spaceBetween: 1,
-                },
-
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-                1400: {
-                  slidesPerView: 5,
-                  spaceBetween: 20,
-                },
-              }}
-              pagination={{ clickable: true }}
-              style={{
-                height: "300px",
-              }}
-            >
-              {products &&
-                products.map((card, index) => {
-                  if (card.category == "Pdf")
-                    return (
-                      <SwiperSlide
-                        key={index + card.category}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {m1 ? (
-                          <CardUI
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        ) : (
-                          <CardUI2
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        )}
-                      </SwiperSlide>
-                    );
-                })}
-            </Swiper>
-          </div>
-        </div>
-        <div style={{ marginTop: m1 ? "0px" : "-60px" }} id="codeya">
-          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: m1 ? "-15px" : "-70px",
-              }}
-            >
-              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
-                Codes
-              </p>
-            </div>
-            <Swiper
-              direction={"horizontal"}
-              slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-                reverseDirection: false,
-              }}
-              breakpoints={{
-                300: {
-                  slidesPerView: 2,
-                  spaceBetween: 1,
-                },
-
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-                1400: {
-                  slidesPerView: 5,
-                  spaceBetween: 20,
-                },
-              }}
-              pagination={{ clickable: true }}
-              style={{
-                height: "300px",
-              }}
-            >
-              {products &&
-                products.map((card, index) => {
-                  if (card.category == "Code")
-                    return (
-                      <SwiperSlide
-                        key={index + card.category}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {m1 ? (
-                          <CardUI
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        ) : (
-                          <CardUI2
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        )}
-                      </SwiperSlide>
-                    );
-                })}
-            </Swiper>
-          </div>
-        </div>
-        <div style={{ marginTop: m1 ? "0px" : "-60px" }} id="othersya">
-          <div style={{ paddingLeft: "5%", paddingRight: "5%" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: m1 ? "-15px" : "-70px",
-              }}
-            >
-              <p style={{ fontSize: m1 ? "35px" : "20px", fontWeight: 500 }}>
-                Others
-              </p>
-            </div>
-            <Swiper
-              direction={"horizontal"}
-              slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 2000,
-                disableOnInteraction: false,
-                reverseDirection: true,
-              }}
-              breakpoints={{
-                300: {
-                  slidesPerView: 2,
-                  spaceBetween: 1,
-                },
-
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-                1400: {
-                  slidesPerView: 5,
-                  spaceBetween: 20,
-                },
-              }}
-              pagination={{ clickable: true }}
-              style={{
-                height: "300px",
-              }}
-            >
-              {products &&
-                products.map((card, index) => {
-                  if (
-                    card.category != "Code" &&
-                    card.category != "Instrument" &&
-                    card.category != "Book" &&
-                    card.category != "Pdf"
-                  )
-                    return (
-                      <SwiperSlide
-                        key={index + card.category}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {m1 ? (
-                          <CardUI
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        ) : (
-                          <CardUI2
-                            image={card.image}
-                            data={{
-                              image: card.image,
-                              name: card.name,
-                              price: card.price,
-                              brand: card.brand,
-                              category: card.category,
-                              route: card.route,
-                              email: card.email,
-                              status: card.presentInCart,
-                            }}
-                            addToCartHandler={addToCartHandler}
-                          />
-                        )}
-                      </SwiperSlide>
-                    );
-                })}
-            </Swiper>
-          </div>
-        </div>
-      </main>
-      {m1 ? (
-        <div>
-          <br />
-          <br />
-          <br />
-          <br />
-        </div>
-      ) : null}
     </ThemeProvider>
   );
 }
